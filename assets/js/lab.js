@@ -1,5 +1,5 @@
 const LAB_STATUS_API_URL = "https://api.daniel-schumacher.net/api/status";
-const LAB_REFRESH_INTERVAL_MS = 30000;
+const LAB_REFRESH_INTERVAL_MS = 5000;
 const LAB_REQUEST_TIMEOUT_MS = 8000;
 
 const metricElements = {
@@ -81,37 +81,43 @@ function setLastUpdated(value, isError = false) {
   })}`;
 }
 
-function setMetricOffline(metric) {
-  if (!metric?.value || !metric?.card) {
-    return;
-  }
+function setMetricsOffline() {
+  Object.values(metricElements).forEach((metric) => {
+    if (!metric?.card) {
+      return;
+    }
 
-  metric.value.textContent = "Offline";
-  metric.card.classList.add("metric-card-offline");
+    metric.card.classList.add("metric-card-offline");
 
-  if (metric.bar) {
-    metric.bar.style.width = "0%";
-  }
+    if (metric.state) {
+      metric.state.textContent = "Offline";
+    }
+  });
+}
 
-  if (metric.state) {
-    metric.state.textContent = "Offline";
-  }
+function setMetricsOnline() {
+  Object.values(metricElements).forEach((metric) => {
+    if (!metric?.card) {
+      return;
+    }
+
+    metric.card.classList.remove("metric-card-offline");
+
+    if (metric.state) {
+      metric.state.textContent = metric.stateText;
+    }
+  });
 }
 
 function updateMetric(metric, value) {
-  if (!metric?.value || !metric?.card) {
+  if (!metric?.value) {
     return;
   }
 
   metric.value.textContent = metric.format(value);
-  metric.card.classList.remove("metric-card-offline");
 
   if (metric.bar) {
     metric.bar.style.width = `${clampPercentage(value)}%`;
-  }
-
-  if (metric.state) {
-    metric.state.textContent = metric.stateText;
   }
 }
 
@@ -135,25 +141,25 @@ async function fetchStatusJson() {
   }
 }
 
-async function updateLabStatus() {
+async function fetchMetrics() {
   try {
     const data = await fetchStatusJson();
 
     Object.entries(metricElements).forEach(([key, metric]) => {
       if (data[key] === undefined || data[key] === null || data[key] === "") {
-        setMetricOffline(metric);
         return;
       }
 
       updateMetric(metric, data[key]);
     });
 
+    setMetricsOnline();
     setLastUpdated(data.lastUpdated);
   } catch (error) {
-    Object.values(metricElements).forEach(setMetricOffline);
+    setMetricsOffline();
     setLastUpdated(null, true);
   }
 }
 
-updateLabStatus();
-window.setInterval(updateLabStatus, LAB_REFRESH_INTERVAL_MS);
+fetchMetrics();
+window.setInterval(fetchMetrics, LAB_REFRESH_INTERVAL_MS);
