@@ -467,6 +467,7 @@ h3 {
   display: grid;
   grid-template-columns: 1fr;
   justify-content: center;
+  align-items: stretch;
   gap: 24px;
 }
 
@@ -535,7 +536,8 @@ h3 {
 .project-card {
   position: relative;
   display: grid;
-  grid-template-rows: minmax(400px, 43%) 1fr;
+  grid-template-rows: minmax(440px, 46%) 1fr;
+  height: 100%;
   min-height: 100%;
   overflow: hidden;
   --project-accent: var(--blue);
@@ -554,9 +556,9 @@ h3 {
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(var(--project-accent-rgb), 0.48);
-  box-shadow: 0 32px 92px rgba(var(--project-accent-rgb), 0.18), var(--shadow-soft);
+  transform: translateY(-7px);
+  border-color: rgba(var(--project-accent-rgb), 0.62);
+  box-shadow: 0 34px 98px rgba(var(--project-accent-rgb), 0.24), var(--shadow-soft);
 }
 
 .project-card:hover::before {
@@ -565,7 +567,7 @@ h3 {
 
 .project-visual {
   position: relative;
-  min-height: 400px;
+  min-height: 440px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 16px;
@@ -610,7 +612,7 @@ h3 {
   align-self: center;
   display: grid;
   justify-items: center;
-  gap: 7px;
+  gap: 9px;
   transition: transform 220ms ease;
 }
 
@@ -627,15 +629,30 @@ h3 {
 .vertical-flow span {
   width: min(100%, 210px);
   max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 7px 11px;
   text-align: center;
   overflow-wrap: anywhere;
 }
 
+.vertical-flow span svg {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: var(--project-accent);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .vertical-flow i {
   position: relative;
   width: 2px;
-  height: 18px;
+  height: 20px;
   border-radius: 999px;
   background: rgba(var(--project-accent-rgb), 0.2);
   overflow: hidden;
@@ -647,7 +664,7 @@ h3 {
   inset: -100% 0 auto;
   height: 100%;
   background: linear-gradient(180deg, transparent, var(--project-accent), transparent);
-  animation: flow-arrow 1.8s linear infinite;
+  animation: flow-arrow 1.7s linear infinite;
 }
 
 .vertical-flow i::after {
@@ -663,7 +680,7 @@ h3 {
 }
 
 .project-card:hover .vertical-flow {
-  transform: scale(1.03);
+  transform: scale(1.035);
 }
 
 .project-status {
@@ -684,8 +701,9 @@ h3 {
 }
 
 .project-body {
-  display: grid;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   padding: 22px;
 }
 
@@ -744,6 +762,10 @@ h3 {
   opacity: 0.58;
   pointer-events: none;
   box-shadow: none;
+}
+
+.project-actions {
+  margin-top: auto;
 }
 
 .section-lead {
