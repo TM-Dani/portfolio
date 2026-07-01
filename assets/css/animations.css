@@ -116,6 +116,12 @@
   }
 }
 
+@keyframes flow-arrow {
+  to {
+    transform: translateY(220%);
+  }
+}
+
 @keyframes ripple {
   to {
     opacity: 0;
