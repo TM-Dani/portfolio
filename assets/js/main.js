@@ -23,19 +23,15 @@ function cleanCurrentUrl() {
 function setupCleanSectionNavigation() {
   document.querySelectorAll("[data-target]").forEach((link) => {
     link.addEventListener("click", (event) => {
-      const targetId = link.dataset.target;
+      event.preventDefault();
 
-      if (!targetId) {
-        return;
-      }
-
+      const targetId = link.getAttribute("data-target");
       const target = document.getElementById(targetId);
 
       if (!target) {
         return;
       }
 
-      event.preventDefault();
       closeMobileNavigation();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
       window.history.replaceState(null, "", window.location.pathname);
