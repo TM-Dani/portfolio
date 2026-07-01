@@ -16,6 +16,7 @@ The website is built for internship and job applications. It presents Daniel's s
 
 ```text
 index.html
+lab.html
 assets/
   css/
     reset.css
@@ -46,6 +47,7 @@ assets/
 - Cursor glow
 - Button ripple effects
 - Premium project cards with visual architecture diagrams, tech badges, status indicators, "What I built" and "What I learned"
+- Dedicated Lab / Infrastructure page with static system overview, metrics, services table and deployment workflow
 - Static homelab dashboard prepared for future live status data
 - Hosting architecture section
 - Download CV callout
@@ -103,6 +105,10 @@ The project and homelab cards include `data-*` attributes so future JavaScript c
 - Cloudflare status endpoints
 
 The layout is already prepared for those values to be updated dynamically later.
+
+## Lab Page
+
+`lab.html` presents the self-hosted infrastructure in a dashboard-style format. It includes static placeholder data for system status, infrastructure metrics, active services, architecture and future improvements so live API data can be added later without redesigning the page.
 
 ## CV
 

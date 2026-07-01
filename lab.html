@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Daniel Schumacher's self-hosted lab infrastructure with Proxmox, Docker, Nginx Proxy Manager and Cloudflare.">
+  <title>Lab Infrastructure | Daniel Schumacher</title>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body class="project-page lab-page">
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="page-glow page-glow-one" aria-hidden="true"></div>
+  <div class="page-glow page-glow-two" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <nav class="nav shell" aria-label="Lab navigation">
+      <a class="brand" href="index.html" aria-label="Back to Daniel Schumacher portfolio">
+        <span class="brand-mark">DS</span>
+      </a>
+      <div class="nav-links project-nav-links">
+        <a href="index.html">Portfolio</a>
+        <a href="/lab.html">Lab</a>
+        <a href="#overview">Systems</a>
+        <a href="#metrics">Metrics</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#services">Services</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero section" data-parallax>
+      <div class="hero-orbit" aria-hidden="true"></div>
+      <div class="shell project-hero-grid">
+        <div class="project-hero-copy reveal">
+          <p class="eyebrow">Self-hosted Lab</p>
+          <h1>Lab Infrastructure</h1>
+          <p class="hero-description">
+            A self-hosted Proxmox and Docker environment used to deploy, monitor and manage my projects.
+          </p>
+          <div class="deployment-badge lab-status-badge" aria-label="Lab status">
+            <span>All Systems Operational</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-primary ripple" href="index.html">Back to Portfolio</a>
+            <a class="button button-ghost ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">View GitHub</a>
+          </div>
+        </div>
+
+        <article class="terminal-card glass floating-card reveal" aria-label="Lab terminal preview">
+          <div class="terminal-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="terminal-lines">
+            <p><span class="prompt">$</span> lab status</p>
+            <p class="terminal-success">proxmox online</p>
+            <p class="terminal-success">docker running</p>
+            <p class="terminal-success">reverse proxy healthy</p>
+            <p><span class="prompt">domain:</span> daniel-schumacher.net</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">System Overview</p>
+          <h2>Core infrastructure services.</h2>
+        </div>
+        <div class="service-grid">
+          <article class="service-card glass reveal" data-api-target="lab.proxmox"><span class="online-dot"></span><h3>Proxmox VE</h3><p>Virtualization platform running my containers and services.</p><strong>Online</strong><span class="service-badge">Virtualization</span></article>
+          <article class="service-card glass reveal" data-api-target="lab.docker"><span class="online-dot"></span><h3>Docker</h3><p>Container runtime for my portfolio and future services.</p><strong>Running</strong><span class="service-badge">Containers</span></article>
+          <article class="service-card glass reveal" data-api-target="lab.portainer"><span class="online-dot"></span><h3>Portainer</h3><p>Web UI for managing Docker containers.</p><strong>Online</strong><span class="service-badge">Management</span></article>
+          <article class="service-card glass reveal" data-api-target="lab.proxy"><span class="online-dot"></span><h3>Nginx Proxy Manager</h3><p>Reverse proxy with HTTPS and Let's Encrypt certificates.</p><strong>Online</strong><span class="service-badge">Reverse Proxy</span></article>
+          <article class="service-card glass reveal" data-api-target="lab.cloudflare"><span class="online-dot"></span><h3>Cloudflare</h3><p>DNS and protection for daniel-schumacher.net.</p><strong>Connected</strong><span class="service-badge">DNS</span></article>
+          <article class="service-card glass reveal" data-api-target="lab.deploy"><span class="online-dot"></span><h3>Automatic Deployment</h3><p>GitHub changes are pulled automatically and deployed to Docker.</p><strong>Active</strong><span class="service-badge">GitHub</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="metrics">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Infrastructure Metrics</p>
+          <h2>Static dashboard placeholders.</h2>
+          <p class="section-lead">These cards are prepared for future live API data.</p>
+        </div>
+        <div class="metric-grid">
+          <article class="metric-card glass reveal" data-api-target="metrics.cpu"><span>CPU Usage</span><strong>10%</strong><div class="metric-bar"><i style="width: 10%"></i></div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.ram"><span>RAM Usage</span><strong>22%</strong><div class="metric-bar"><i style="width: 22%"></i></div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.storage"><span>Storage Used</span><strong>52%</strong><div class="metric-bar"><i style="width: 52%"></i></div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.containers"><span>Containers</span><strong>3 running</strong><div class="metric-state">Healthy</div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.uptime"><span>Uptime</span><strong>1 day+</strong><div class="metric-state">Stable</div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.ssl"><span>SSL</span><strong>Valid</strong><div class="metric-state">HTTPS</div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Architecture Diagram</p>
+          <h2>From GitHub to the public domain.</h2>
+        </div>
+        <div class="hosting-flow glass reveal" aria-label="Lab architecture diagram">
+          <div class="flow-card">GitHub</div>
+          <div class="flow-arrow" aria-hidden="true">&darr;</div>
+          <div class="flow-card">Deploy Script</div>
+          <div class="flow-arrow" aria-hidden="true">&darr;</div>
+          <div class="flow-card">Docker Container</div>
+          <div class="flow-arrow" aria-hidden="true">&darr;</div>
+          <div class="flow-card">Nginx Proxy Manager</div>
+          <div class="flow-arrow" aria-hidden="true">&darr;</div>
+          <div class="flow-card">Swisscom Router</div>
+          <div class="flow-arrow" aria-hidden="true">&darr;</div>
+          <div class="flow-card">Cloudflare DNS</div>
+          <div class="flow-arrow" aria-hidden="true">&darr;</div>
+          <div class="flow-card domain-card">daniel-schumacher.net</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Services Table</p>
+          <h2>Current public and internal services.</h2>
+        </div>
+        <div class="table-wrap glass reveal">
+          <table class="services-table">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Purpose</th>
+                <th>Status</th>
+                <th>Port</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Portfolio</td><td>Public website</td><td><span class="status-pill">Online</span></td><td>8080</td></tr>
+              <tr><td>Portainer</td><td>Docker management</td><td><span class="status-pill">Online</span></td><td>9000 / 9443</td></tr>
+              <tr><td>Nginx Proxy Manager</td><td>Reverse proxy</td><td><span class="status-pill">Online</span></td><td>80 / 443 / 81</td></tr>
+              <tr><td>Proxmox</td><td>Virtualization</td><td><span class="status-pill">Online</span></td><td>8006</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Deployment Workflow</p>
+          <h2>How changes reach the live website.</h2>
+        </div>
+        <div class="workflow-strip glass reveal" aria-label="Deployment workflow">
+          <span>CodeX</span>
+          <span>GitHub</span>
+          <span>automatic deploy script</span>
+          <span>Docker volume</span>
+          <span>Nginx</span>
+          <span>live website</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="future">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Future Improvements</p>
+          <h2>Next upgrades for the lab.</h2>
+        </div>
+        <div class="future-grid">
+          <article class="mini-card glass reveal">Uptime Kuma monitoring</article>
+          <article class="mini-card glass reveal">Live API metrics</article>
+          <article class="mini-card glass reveal">Backups</article>
+          <article class="mini-card glass reveal">GitHub webhook deployment</article>
+          <article class="mini-card glass reveal">Dashboard authentication</article>
+          <article class="mini-card glass reveal">Custom domain email</article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell cv-panel glass reveal">
+        <div>
+          <p class="eyebrow">Running here</p>
+          <h2>This website is running on the infrastructure shown above.</h2>
+        </div>
+        <a class="button button-primary cv-button ripple" href="index.html">Back to Home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <p>Built with HTML, CSS and JavaScript</p>
+      <p class="footer-status">Self-hosted &bull; Docker &bull; Cloudflare &bull; HTTPS</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
