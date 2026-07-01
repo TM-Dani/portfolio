@@ -187,6 +187,7 @@
   .terminal-card,
   .stack-card,
   .skill-category,
+  .project-visual,
   .project-body,
   .status-card,
   .service-card,
@@ -195,8 +196,8 @@
     padding: 18px;
   }
 
-  .project-media {
-    min-height: 132px;
+  .project-visual {
+    min-height: 190px;
   }
 
   .timeline-item {

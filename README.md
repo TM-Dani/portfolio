@@ -45,8 +45,7 @@ assets/
 - Scroll reveal animations
 - Cursor glow
 - Button ripple effects
-- Premium project cards with "What I built" and "What I learned"
-- Cropped project screenshots focused on relevant UI areas
+- Premium project cards with visual architecture diagrams, tech badges, status indicators, "What I built" and "What I learned"
 - Static homelab dashboard prepared for future live status data
 - Hosting architecture section
 - Download CV callout

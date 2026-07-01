@@ -165,7 +165,19 @@
         </div>
         <div class="projects-grid">
           <article class="project-card glass reveal" data-project="personal-portfolio">
-            <div class="project-media"><span>Portfolio UI</span></div>
+            <div class="project-visual" aria-label="Personal Portfolio architecture">
+              <div class="project-icon">PF</div>
+              <div class="mini-flow">
+                <span>HTML/CSS/JS</span>
+                <i>&rarr;</i>
+                <span>GitHub</span>
+                <i>&rarr;</i>
+                <span>Docker</span>
+                <i>&rarr;</i>
+                <span>HTTPS</span>
+              </div>
+              <span class="project-status"><span class="online-dot"></span>Live</span>
+            </div>
             <div class="project-body">
               <h3>Personal Portfolio</h3>
               <div class="project-detail"><strong>What I built</strong><p>A modern self-hosted developer portfolio running on my own Proxmox homelab.</p></div>
@@ -179,7 +191,23 @@
           </article>
 
           <article class="project-card glass reveal" data-project="homelab">
-            <div class="project-media"><span>Infrastructure</span></div>
+            <div class="project-visual" aria-label="Homelab architecture">
+              <div class="project-icon">HL</div>
+              <div class="mini-flow">
+                <span>GitHub</span>
+                <i>&rarr;</i>
+                <span>Deploy Script</span>
+                <i>&rarr;</i>
+                <span>Docker</span>
+                <i>&rarr;</i>
+                <span>Nginx Proxy Manager</span>
+                <i>&rarr;</i>
+                <span>Cloudflare</span>
+                <i>&rarr;</i>
+                <span>daniel-schumacher.net</span>
+              </div>
+              <span class="project-status"><span class="online-dot"></span>Online</span>
+            </div>
             <div class="project-body">
               <h3>Homelab</h3>
               <div class="project-detail"><strong>What I built</strong><p>A self-hosted infrastructure built with Proxmox to deploy and manage personal projects using Docker, Portainer, Nginx Proxy Manager and Cloudflare.</p></div>
@@ -193,7 +221,19 @@
           </article>
 
           <article class="project-card glass reveal" data-project="intralink-chat">
-            <div class="project-media"><span>Chat App</span></div>
+            <div class="project-visual" aria-label="Intralink Chat flow">
+              <div class="project-icon">IC</div>
+              <div class="mini-flow">
+                <span>Login</span>
+                <i>&rarr;</i>
+                <span>Chat</span>
+                <i>&rarr;</i>
+                <span>Profile</span>
+                <i>&rarr;</i>
+                <span>Database</span>
+              </div>
+              <span class="project-status"><span class="online-dot"></span>School Project</span>
+            </div>
             <div class="project-body">
               <h3>Intralink Chat</h3>
               <div class="project-detail"><strong>What I built</strong><p>A school project featuring user authentication, profiles, chat functionality, dark mode and a MySQL database.</p></div>
@@ -205,103 +245,6 @@
               </div>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="project-screenshots">
-      <div class="shell">
-        <div class="section-heading reveal">
-          <p class="eyebrow">Project Screenshots</p>
-          <h2>Cropped views of the most important project screens.</h2>
-          <p class="section-lead">Focused screenshots from the homelab stack, the portfolio interface and upcoming Intralink Chat views.</p>
-        </div>
-
-        <div class="screenshot-group reveal">
-          <div class="screenshot-group-heading">
-            <h3>Homelab Infrastructure</h3>
-            <p>Live services and infrastructure tools powering the self-hosted portfolio.</p>
-          </div>
-          <div class="screenshot-grid">
-            <figure class="screenshot-card glass">
-              <figcaption>Proxmox Dashboard</figcaption>
-              <div class="screenshot-frame"><img class="focus-left" src="assets/images/screenshots/homelab-proxmox-dashboard.png" alt="Cropped Proxmox dashboard showing summary, CPU usage and memory usage"></div>
-              <p>Container summary, CPU/RAM usage and node overview.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Portainer</figcaption>
-              <div class="screenshot-frame"><img class="focus-top" src="assets/images/screenshots/homelab-portainer-containers.png" alt="Cropped Portainer container list showing portfolio containers"></div>
-              <p>Running containers: portainer, portfolio and portfolio-updater.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Nginx Proxy Manager</figcaption>
-              <div class="screenshot-frame"><img class="focus-right" src="assets/images/screenshots/homelab-nginx-proxy-manager.png" alt="Cropped Nginx Proxy Manager proxy host row"></div>
-              <p>Proxy host, domains, Let's Encrypt SSL and online status.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Cloudflare DNS</figcaption>
-              <div class="screenshot-frame"><img class="focus-center" src="assets/images/screenshots/homelab-cloudflare-dns.png" alt="Cropped Cloudflare DNS A records"></div>
-              <p>A records for daniel-schumacher.net and www.</p>
-            </figure>
-          </div>
-        </div>
-
-        <div class="screenshot-group reveal">
-          <div class="screenshot-group-heading">
-            <h3>Personal Portfolio</h3>
-            <p>Key responsive sections from the static portfolio website.</p>
-          </div>
-          <div class="screenshot-grid">
-            <figure class="screenshot-card glass">
-              <figcaption>Homepage Desktop</figcaption>
-              <div class="screenshot-frame"><img class="focus-center" src="assets/images/screenshots/portfolio-homepage-desktop.png" alt="Cropped portfolio homepage hero with terminal and current stack cards"></div>
-              <p>Hero section, terminal card and current stack card.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Homepage Mobile</figcaption>
-              <div class="screenshot-frame screenshot-placeholder"><span>Mobile screenshot coming soon</span></div>
-              <p>Responsive homepage view placeholder.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Projects Section</figcaption>
-              <div class="screenshot-frame screenshot-placeholder"><span>Projects screenshot coming soon</span></div>
-              <p>Project cards view placeholder.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Hosting Section</figcaption>
-              <div class="screenshot-frame screenshot-placeholder"><span>Hosting screenshot coming soon</span></div>
-              <p>Hosting architecture view placeholder.</p>
-            </figure>
-          </div>
-        </div>
-
-        <div class="screenshot-group reveal">
-          <div class="screenshot-group-heading">
-            <h3>Intralink Chat</h3>
-            <p>Planned screenshots for the school chat application.</p>
-          </div>
-          <div class="screenshot-grid">
-            <figure class="screenshot-card glass">
-              <figcaption>Login</figcaption>
-              <div class="screenshot-frame screenshot-placeholder"><span>Login screenshot coming soon</span></div>
-              <p>Authentication screen placeholder.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Chat Interface</figcaption>
-              <div class="screenshot-frame"><img class="focus-center" src="assets/images/screenshots/intralink-chat-interface.png" alt="Cropped Intralink Chat interface with sidebar, chat feed and announcements"></div>
-              <p>Main conversation interface with posts, likes and announcements.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>User Profile</figcaption>
-              <div class="screenshot-frame"><img class="focus-center" src="assets/images/screenshots/intralink-user-profile.png" alt="Cropped Intralink Chat user profile page"></div>
-              <p>Profile details, avatar upload and editable user settings.</p>
-            </figure>
-            <figure class="screenshot-card glass">
-              <figcaption>Dark Mode</figcaption>
-              <div class="screenshot-frame screenshot-placeholder"><span>Dark mode screenshot coming soon</span></div>
-              <p>Dark theme interface placeholder.</p>
-            </figure>
-          </div>
         </div>
       </div>
     </section>

@@ -559,28 +559,76 @@ h3 {
   opacity: 1;
 }
 
-.project-media {
-  min-height: 160px;
+.project-visual {
+  position: relative;
+  min-height: 220px;
   display: grid;
-  place-items: center;
+  align-content: space-between;
+  gap: 18px;
+  padding: 22px;
   border-bottom: 1px solid rgba(148, 163, 184, 0.14);
   background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.22), rgba(168, 85, 247, 0.18)),
+    radial-gradient(circle at 18% 12%, rgba(168, 85, 247, 0.26), transparent 34%),
+    radial-gradient(circle at 88% 16%, rgba(56, 189, 248, 0.18), transparent 36%),
+    linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(2, 6, 23, 0.72)),
     repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 14px);
 }
 
-.project-media span {
-  padding: 9px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+.project-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(96, 165, 250, 0.32);
   border-radius: var(--radius);
-  background: rgba(2, 6, 23, 0.58);
-  color: var(--muted-strong);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.38), rgba(168, 85, 247, 0.28));
+  color: var(--text);
+  box-shadow: 0 18px 54px rgba(37, 99, 235, 0.22);
   font-weight: 900;
 }
 
-.project-card:hover .project-media span {
-  border-color: rgba(56, 189, 248, 0.38);
-  box-shadow: 0 0 34px rgba(56, 189, 248, 0.16);
+.mini-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.mini-flow span,
+.project-status {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.58);
+  color: #dbeafe;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.mini-flow span {
+  padding: 7px 10px;
+}
+
+.mini-flow i {
+  color: var(--blue);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.project-status {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+}
+
+.project-status .online-dot {
+  margin: 0;
+}
+
+.project-card:hover .project-icon {
+  border-color: rgba(56, 189, 248, 0.46);
+  box-shadow: 0 0 38px rgba(56, 189, 248, 0.22);
 }
 
 .project-body {
@@ -684,115 +732,6 @@ h3 {
 .cv-button {
   min-height: 58px;
   box-shadow: 0 24px 70px rgba(124, 58, 237, 0.36);
-}
-
-/* Project screenshots */
-.screenshot-group {
-  display: grid;
-  gap: 18px;
-}
-
-.screenshot-group + .screenshot-group {
-  margin-top: 46px;
-}
-
-.screenshot-group-heading {
-  max-width: 720px;
-}
-
-.screenshot-group-heading h3 {
-  margin-bottom: 8px;
-  font-size: 1.35rem;
-}
-
-.screenshot-group-heading p,
-.screenshot-card p {
-  color: var(--muted);
-}
-
-.screenshot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
-  gap: 18px;
-}
-
-.screenshot-card {
-  display: grid;
-  gap: 12px;
-  padding: 14px;
-  border-radius: var(--radius);
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-}
-
-.screenshot-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(96, 165, 250, 0.42);
-  box-shadow: 0 26px 76px rgba(37, 99, 235, 0.18);
-}
-
-.screenshot-card figcaption {
-  color: var(--blue);
-  font-size: 0.76rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.screenshot-frame {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border: 1px solid rgba(96, 165, 250, 0.2);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.22), transparent 36%),
-    linear-gradient(135deg, rgba(37, 99, 235, 0.16), rgba(2, 6, 23, 0.86));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 18px 54px rgba(37, 99, 235, 0.12);
-}
-
-.screenshot-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.screenshot-frame img.focus-left {
-  object-position: left center;
-}
-
-.screenshot-frame img.focus-right {
-  object-position: right center;
-}
-
-.screenshot-frame img.focus-top {
-  object-position: center top;
-}
-
-.screenshot-frame img.focus-center {
-  object-position: center;
-}
-
-.screenshot-placeholder {
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  color: var(--muted-strong);
-  text-align: center;
-}
-
-.screenshot-placeholder::before {
-  content: "";
-  position: absolute;
-  inset: 20px;
-  border: 1px dashed rgba(148, 163, 184, 0.24);
-  border-radius: calc(var(--radius) - 2px);
-}
-
-.screenshot-placeholder span {
-  position: relative;
-  z-index: 1;
-  font-size: 0.9rem;
-  font-weight: 900;
 }
 
 /* API-ready status cards */
