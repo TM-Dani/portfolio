@@ -21,7 +21,6 @@ body.nav-open {
 .section {
   position: relative;
   padding: 92px 0;
-  scroll-margin-top: var(--nav-height);
 }
 
 .glass {
