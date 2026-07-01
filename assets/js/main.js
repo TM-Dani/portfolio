@@ -21,29 +21,25 @@ function cleanCurrentUrl() {
 }
 
 function setupCleanSectionNavigation() {
-  document.addEventListener("click", (event) => {
-    const link = event.target.closest("[data-scroll-target]");
+  document.querySelectorAll("[data-target]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const targetId = link.dataset.target;
 
-    if (!link) {
-      return;
-    }
+      if (!targetId) {
+        return;
+      }
 
-    const targetId = link.dataset.scrollTarget;
+      const target = document.getElementById(targetId);
 
-    if (!targetId) {
-      return;
-    }
+      if (!target) {
+        return;
+      }
 
-    const target = document.getElementById(targetId);
-
-    if (!target) {
-      return;
-    }
-
-    event.preventDefault();
-    closeMobileNavigation();
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, "", window.location.pathname);
+      event.preventDefault();
+      closeMobileNavigation();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState(null, "", window.location.pathname);
+    });
   });
 }
 
