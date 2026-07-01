@@ -31,6 +31,7 @@
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
         <a href="#homelab">Homelab</a>
+        <a href="#hosting">Hosting</a>
         <a href="#timeline">Timeline</a>
         <a href="#contact">Contact</a>
       </div>
@@ -52,6 +53,12 @@
           <p class="hero-description">
             Application Development EFZ student from Switzerland passionate about building modern web applications, self-hosting services and learning DevOps through real-world projects.
           </p>
+          <div class="deployment-badge" aria-label="Deployment stack">
+            <span>Self-hosted</span>
+            <span>Docker</span>
+            <span>Cloudflare</span>
+            <span>HTTPS</span>
+          </div>
           <div class="hero-actions">
             <a class="button button-primary ripple" href="#projects">View Projects</a>
             <a class="button button-secondary ripple" href="assets/documents/cv.pdf" download>Download CV</a>
@@ -99,10 +106,10 @@
           <p class="eyebrow">About</p>
           <h2>Building real projects while learning the full software lifecycle.</h2>
           <p>
-            I’m Daniel Schumacher, an aspiring software developer from Switzerland studying Application Development EFZ. I enjoy turning ideas into practical web applications, APIs, Docker-based services and self-hosted infrastructure.
+            I'm Daniel Schumacher, an aspiring software developer from Switzerland studying Application Development EFZ. I enjoy turning ideas into practical web applications, APIs, Docker-based services and self-hosted infrastructure.
           </p>
           <p>
-            I’m interested in web development, Linux, Docker and DevOps, and I use my homelab to learn by running real services instead of only reading about them. I’m currently looking for an internship where I can continue growing as a developer.
+            I'm interested in web development, Linux, Docker and DevOps, and I use my homelab to learn by running real services instead of only reading about them. I'm currently looking for an internship where I can continue growing as a developer.
           </p>
         </div>
       </div>
@@ -157,12 +164,13 @@
           <h2>Selected work and systems.</h2>
         </div>
         <div class="projects-grid">
-          <article class="project-card glass reveal" data-project="developer-portfolio">
+          <article class="project-card glass reveal" data-project="personal-portfolio">
             <div class="project-media"><span>Portfolio UI</span></div>
             <div class="project-body">
-              <h3>Developer Portfolio</h3>
-              <p>A modern static portfolio designed for internship and job applications, deployed through a self-hosted Docker stack.</p>
-              <div class="badge-list"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Docker</span></div>
+              <h3>Personal Portfolio</h3>
+              <div class="project-detail"><strong>What I built</strong><p>A modern static portfolio for internship applications, deployed through my self-hosted Docker stack.</p></div>
+              <div class="project-detail"><strong>What I learned</strong><p>Responsive UI structure, deployment flow, reverse proxy routing and performance-minded static hosting.</p></div>
+              <div class="badge-list" aria-label="Tech stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Docker</span><span>Nginx Proxy Manager</span><span>Cloudflare</span></div>
               <div class="project-actions">
                 <a class="small-button ripple" href="https://daniel-schumacher.net" target="_blank" rel="noreferrer">Live Demo</a>
                 <a class="small-button muted ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">GitHub</a>
@@ -174,8 +182,9 @@
             <div class="project-media"><span>Infrastructure</span></div>
             <div class="project-body">
               <h3>Homelab</h3>
-              <p>A self-hosted infrastructure setup for learning deployment, networking, reverse proxy routing and service operations.</p>
-              <div class="badge-list"><span>Proxmox</span><span>Docker</span><span>Cloudflare</span><span>Portainer</span><span>Nginx Proxy Manager</span><span>Linux</span></div>
+              <div class="project-detail"><strong>What I built</strong><p>A self-hosted infrastructure setup for services, containers, routing, DNS and portfolio deployment.</p></div>
+              <div class="project-detail"><strong>What I learned</strong><p>Linux operations, Docker management, service monitoring, networking basics and secure public access.</p></div>
+              <div class="badge-list" aria-label="Tech stack"><span>Proxmox</span><span>Docker</span><span>Cloudflare</span><span>Portainer</span><span>Nginx Proxy Manager</span><span>Linux</span></div>
               <div class="project-actions">
                 <a class="small-button ripple" href="#homelab">Live Demo</a>
                 <a class="small-button muted ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">GitHub</a>
@@ -187,8 +196,51 @@
             <div class="project-media"><span>Chat App</span></div>
             <div class="project-body">
               <h3>Intralink Chat</h3>
-              <p>A school chat web application with login, posts, likes, dark mode and a MySQL database.</p>
-              <div class="badge-list"><span>PHP</span><span>Twig</span><span>Bootstrap</span><span>Docker</span><span>JWT</span></div>
+              <div class="project-detail"><strong>What I built</strong><p>A school chat web application with login, posts, likes, dark mode and a MySQL database.</p></div>
+              <div class="project-detail"><strong>What I learned</strong><p>Authentication flow, database-backed features, templating, UI states and structured backend logic.</p></div>
+              <div class="badge-list" aria-label="Tech stack"><span>PHP</span><span>Twig</span><span>Bootstrap</span><span>Docker</span><span>JWT</span><span>MySQL</span></div>
+              <div class="project-actions">
+                <a class="small-button ripple" href="#contact">Demo</a>
+                <a class="small-button muted ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal" data-project="movie-api">
+            <div class="project-media"><span>REST API</span></div>
+            <div class="project-body">
+              <h3>Movie API</h3>
+              <div class="project-detail"><strong>What I built</strong><p>A REST API with users, movie data, MySQL storage and JWT-based authentication.</p></div>
+              <div class="project-detail"><strong>What I learned</strong><p>API design, protected routes, token-based authentication and clean request/response structures.</p></div>
+              <div class="badge-list" aria-label="Tech stack"><span>PHP</span><span>MySQL</span><span>JWT</span><span>REST API</span></div>
+              <div class="project-actions">
+                <a class="small-button ripple" href="#contact">Demo</a>
+                <a class="small-button muted ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal" data-project="sidequest">
+            <div class="project-media"><span>SideQuest</span></div>
+            <div class="project-body">
+              <h3>SideQuest</h3>
+              <div class="project-detail"><strong>What I built</strong><p>A project space for experimenting with application ideas, interfaces and useful features.</p></div>
+              <div class="project-detail"><strong>What I learned</strong><p>Planning project scope, iterating on frontend structure and keeping code easy to extend.</p></div>
+              <div class="badge-list" aria-label="Tech stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>UI</span></div>
+              <div class="project-actions">
+                <a class="small-button ripple" href="#contact">Demo</a>
+                <a class="small-button muted ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card glass reveal" data-project="artillery-planner">
+            <div class="project-media"><span>Planner</span></div>
+            <div class="project-body">
+              <h3>Artillery Planner</h3>
+              <div class="project-detail"><strong>What I built</strong><p>A planning-focused application concept for structured data, calculations and workflow organization.</p></div>
+              <div class="project-detail"><strong>What I learned</strong><p>Breaking a complex tool into clear screens, reusable data models and practical UI components.</p></div>
+              <div class="badge-list" aria-label="Tech stack"><span>JavaScript</span><span>Planning Tool</span><span>Data</span><span>UI</span></div>
               <div class="project-actions">
                 <a class="small-button ripple" href="#contact">Demo</a>
                 <a class="small-button muted ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">GitHub</a>
@@ -209,43 +261,57 @@
           <span class="api-note">Prepared for future API integration</span>
         </div>
         <div class="dashboard-grid">
-          <article class="status-card glass reveal" data-service="server" data-api-target="homelab.server">
-            <span class="online-dot"></span>
-            <h3>Server</h3>
-            <p>Proxmox host</p>
-            <strong>Online</strong>
-          </article>
-          <article class="status-card glass reveal" data-service="docker" data-api-target="homelab.docker">
-            <span class="online-dot"></span>
-            <h3>Docker</h3>
-            <p>Containers</p>
-            <strong>Online</strong>
-          </article>
-          <article class="status-card glass reveal" data-service="portainer" data-api-target="homelab.portainer">
-            <span class="online-dot"></span>
-            <h3>Portainer</h3>
-            <p>Management UI</p>
-            <strong>Online</strong>
-          </article>
-          <article class="status-card glass reveal" data-service="cloudflare" data-api-target="cloudflare.status">
-            <span class="online-dot"></span>
-            <h3>Cloudflare</h3>
-            <p>DNS and tunnel</p>
-            <strong>Connected</strong>
-          </article>
-          <article class="status-card glass reveal" data-service="nginx-proxy-manager" data-api-target="homelab.proxy">
-            <span class="online-dot"></span>
-            <h3>Nginx Proxy Manager</h3>
-            <p>Reverse proxy</p>
-            <strong>Online</strong>
-          </article>
-          <article class="status-card glass reveal" data-service="portfolio" data-api-target="site.portfolio">
-            <span class="online-dot"></span>
-            <h3>Portfolio</h3>
-            <p>Static website</p>
-            <strong>Online</strong>
-          </article>
+          <article class="status-card glass reveal" data-service="server" data-api-target="homelab.server"><span class="online-dot"></span><h3>Server</h3><p>Proxmox host</p><strong>Online</strong></article>
+          <article class="status-card glass reveal" data-service="docker" data-api-target="homelab.docker"><span class="online-dot"></span><h3>Docker</h3><p>Containers</p><strong>Online</strong></article>
+          <article class="status-card glass reveal" data-service="portainer" data-api-target="homelab.portainer"><span class="online-dot"></span><h3>Portainer</h3><p>Management UI</p><strong>Online</strong></article>
+          <article class="status-card glass reveal" data-service="cloudflare" data-api-target="cloudflare.status"><span class="online-dot"></span><h3>Cloudflare</h3><p>DNS and tunnel</p><strong>Connected</strong></article>
+          <article class="status-card glass reveal" data-service="nginx-proxy-manager" data-api-target="homelab.proxy"><span class="online-dot"></span><h3>Nginx Proxy Manager</h3><p>Reverse proxy</p><strong>Online</strong></article>
+          <article class="status-card glass reveal" data-service="portfolio" data-api-target="site.portfolio"><span class="online-dot"></span><h3>Portfolio</h3><p>Static website</p><strong>Online</strong></article>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="hosting">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">How this website is hosted</p>
+          <h2>Self-hosted from GitHub to my Proxmox homelab.</h2>
+          <p class="section-lead">This website is self-hosted on my own Proxmox homelab and deployed automatically from GitHub.</p>
+        </div>
+        <div class="hosting-flow glass reveal" aria-label="Hosting architecture diagram">
+          <div class="flow-card">GitHub</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Automatic Deploy Script</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Docker Container</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Nginx Proxy Manager</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Cloudflare DNS</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card domain-card">daniel-schumacher.net</div>
+        </div>
+        <div class="hosting-badges reveal" aria-label="Hosting technology badges">
+          <span>Proxmox</span>
+          <span>Docker</span>
+          <span>Portainer</span>
+          <span>Nginx Proxy Manager</span>
+          <span>Cloudflare</span>
+          <span>GitHub</span>
+          <span>Let's Encrypt</span>
+          <span>Linux</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cv-section" id="cv">
+      <div class="shell cv-panel glass reveal">
+        <div>
+          <p class="eyebrow">CV</p>
+          <h2>Download my CV</h2>
+          <p>My CV is available as a PDF for internship and job applications.</p>
+        </div>
+        <a class="button button-primary cv-button ripple" href="assets/documents/cv.pdf" download>Download CV</a>
       </div>
     </section>
 
@@ -256,22 +322,10 @@
           <h2>Learning path and milestones.</h2>
         </div>
         <div class="timeline">
-          <article class="timeline-item reveal">
-            <span class="timeline-year">2023</span>
-            <div class="timeline-card glass"><h3>Started EFZ</h3><p>Began the Application Development EFZ path.</p></div>
-          </article>
-          <article class="timeline-item reveal">
-            <span class="timeline-year">2024</span>
-            <div class="timeline-card glass"><h3>Built first PHP applications</h3><p>Created early database-backed web projects and learned server-side fundamentals.</p></div>
-          </article>
-          <article class="timeline-item reveal">
-            <span class="timeline-year">2025</span>
-            <div class="timeline-card glass"><h3>Started self-hosting</h3><p>Experimented with Docker, Linux services, reverse proxies and real deployment workflows.</p></div>
-          </article>
-          <article class="timeline-item reveal">
-            <span class="timeline-year">2026</span>
-            <div class="timeline-card glass"><h3>Built Proxmox homelab</h3><p>Created portfolio, expanded the homelab and started focused DevOps learning.</p></div>
-          </article>
+          <article class="timeline-item reveal"><span class="timeline-year">2023</span><div class="timeline-card glass"><h3>Started EFZ</h3><p>Began the Application Development EFZ path.</p></div></article>
+          <article class="timeline-item reveal"><span class="timeline-year">2024</span><div class="timeline-card glass"><h3>Built first PHP applications</h3><p>Created early database-backed web projects and learned server-side fundamentals.</p></div></article>
+          <article class="timeline-item reveal"><span class="timeline-year">2025</span><div class="timeline-card glass"><h3>Started self-hosting</h3><p>Experimented with Docker, Linux services, reverse proxies and real deployment workflows.</p></div></article>
+          <article class="timeline-item reveal"><span class="timeline-year">2026</span><div class="timeline-card glass"><h3>Built Proxmox homelab</h3><p>Created portfolio, expanded the homelab and started focused DevOps learning.</p></div></article>
         </div>
       </div>
     </section>
@@ -281,13 +335,12 @@
         <div class="contact-copy">
           <p class="eyebrow">Contact</p>
           <h2>Interested in working together?</h2>
-          <p>I’m currently looking for an internship where I can contribute, learn from experienced developers and keep improving through real projects.</p>
+          <p>I'm currently looking for an internship where I can contribute, learn from experienced developers and keep improving through real projects.</p>
         </div>
         <div class="contact-links">
-          <a class="contact-link ripple" href="mailto:daniel.schuemi@icloud.com"><span>Email</span><strong>daniel.schuemi@icloud.com</strong></a>
+          <a class="contact-link ripple" href="mailto:daniel.schuemi@gmail.com"><span>Email</span><strong>daniel.schuemi@gmail.com</strong></a>
           <a class="contact-link ripple" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer"><span>GitHub</span><strong>github.com/TM-Dani</strong></a>
-          <a class="contact-link ripple" href="https://www.linkedin.com/in/daniel-schumacher-9213b7355/" target="_blank" rel="noreferrer"><span>LinkedIn</span><strong>Daniel Schumacher</strong></a>
-          <a class="contact-link ripple" href="tel:+41798913729"><span>Phone</span><strong>+41 79 891 37 29</strong></a>
+          <a class="contact-link ripple" href="https://daniel-schumacher.net" target="_blank" rel="noreferrer"><span>Website</span><strong>daniel-schumacher.net</strong></a>
         </div>
       </div>
     </section>
@@ -298,6 +351,7 @@
       <p>Built with HTML, CSS and JavaScript</p>
       <p>Hosted on my own Proxmox server</p>
       <p>Powered by Docker, Cloudflare and Nginx Proxy Manager</p>
+      <p class="footer-status">Self-hosted • Docker • Cloudflare • HTTPS</p>
     </div>
   </footer>
 

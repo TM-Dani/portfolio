@@ -2,7 +2,7 @@
 
 A premium static developer portfolio for Daniel Schumacher, an aspiring software developer from Switzerland.
 
-The portfolio is designed for internship and job applications and presents Daniel's skills, projects, learning timeline and self-hosted homelab.
+The website is built for internship and job applications. It presents Daniel's skills, projects, learning timeline, contact details, and self-hosted Proxmox homelab.
 
 ## Tech Stack
 
@@ -12,7 +12,7 @@ The portfolio is designed for internship and job applications and presents Danie
 - No frameworks
 - No Bootstrap
 
-## Structure
+## Project Structure
 
 ```text
 index.html
@@ -37,7 +37,7 @@ assets/
 ## Features
 
 - Dark navy theme with purple and blue accents
-- Glassmorphism cards and soft gradient glow
+- Glassmorphism cards and subtle glowing effects
 - Responsive mobile-first layout
 - Sticky navigation with smooth scrolling
 - Typing hero subtitle
@@ -45,18 +45,53 @@ assets/
 - Scroll reveal animations
 - Cursor glow
 - Button ripple effects
-- Premium project card layout
+- Premium project cards with "What I built" and "What I learned"
 - Static homelab dashboard prepared for future live status data
+- Hosting architecture section
+- Download CV callout
 
-## Self-Hosting
+## Hosting Architecture
 
-This portfolio is intended to be self-hosted on a Proxmox homelab using Docker, Nginx Proxy Manager and Cloudflare.
+This website is self-hosted on a Proxmox homelab and deployed automatically from GitHub.
+
+```text
+GitHub
+  -> Automatic Deploy Script
+  -> Docker Container
+  -> Nginx Proxy Manager
+  -> Cloudflare DNS
+  -> daniel-schumacher.net
+```
+
+Hosting technologies:
+
+- Proxmox
+- Docker
+- Portainer
+- Nginx Proxy Manager
+- Cloudflare
+- GitHub
+- Let's Encrypt
+- Linux
+
+## Deployment Workflow
+
+```text
+CodeX
+  -> GitHub
+  -> automatic deploy script
+  -> Docker
+  -> live website
+```
 
 Typical deployment flow:
 
-1. Serve the static files with a lightweight Docker web server.
-2. Route traffic through Nginx Proxy Manager.
-3. Connect the public domain and DNS through Cloudflare.
+1. Make and test static site changes locally.
+2. Push the portfolio code to GitHub.
+3. Let the automatic deploy script pull the latest version.
+4. Serve the site from a Docker container.
+5. Route traffic through Nginx Proxy Manager.
+6. Use Cloudflare DNS and HTTPS for the public domain.
 
 ## Future API Integration
 
