@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Daniel Schumacher - aspiring software developer from Switzerland with a self-hosted Proxmox homelab.">
+  <title>Daniel Schumacher | Aspiring Software Developer</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="logo" href="#home" aria-label="Daniel Schumacher home">
+        <span class="logo-mark">DS</span>
+        <span>Daniel Schumacher</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#homelab">Homelab</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-content reveal">
+          <p class="eyebrow">Switzerland based developer</p>
+          <h1>Daniel Schumacher</h1>
+          <p class="hero-title">Aspiring Software Developer</p>
+          <p class="hero-subtitle">Application Development EFZ student from Switzerland</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View Projects</a>
+            <a class="btn btn-secondary" href="assets/documents/cv.pdf" download>Download CV</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel glass-card reveal" aria-label="Developer profile summary">
+          <div class="terminal-dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <p class="terminal-line"><span>$</span> docker compose up -d</p>
+          <p class="terminal-line success">portfolio_nginx started</p>
+          <p class="terminal-line success">cloudflare_tunnel connected</p>
+          <p class="terminal-line">status: ready for opportunities</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container split-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow">About Me</p>
+          <h2>Building software and infrastructure with curiosity.</h2>
+        </div>
+        <div class="glass-card about-card reveal">
+          <p>I’m Daniel Schumacher, an aspiring software developer from Switzerland. I enjoy building web applications, APIs, Docker-based projects and self-hosted homelab infrastructure. I’m currently looking for an internship where I can continue growing as a developer.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <p class="eyebrow">Skills</p>
+          <h2>Tools and technologies I work with</h2>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-card reveal">HTML</div>
+          <div class="skill-card reveal">CSS</div>
+          <div class="skill-card reveal">JavaScript</div>
+          <div class="skill-card reveal">PHP</div>
+          <div class="skill-card reveal">Java</div>
+          <div class="skill-card reveal">SQL</div>
+          <div class="skill-card reveal">MySQL</div>
+          <div class="skill-card reveal">Git</div>
+          <div class="skill-card reveal">Docker</div>
+          <div class="skill-card reveal">Linux</div>
+          <div class="skill-card reveal">Proxmox</div>
+          <div class="skill-card reveal">Cloudflare</div>
+          <div class="skill-card reveal">Nginx</div>
+          <div class="skill-card reveal">Portainer</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Projects</p>
+          <h2>Selected work</h2>
+        </div>
+        <div class="projects-grid">
+          <article class="project-card glass-card reveal">
+            <div class="project-icon">01</div>
+            <h3>Personal Portfolio</h3>
+            <p>Self-hosted portfolio running on my own Proxmox homelab.</p>
+            <div class="tech-list">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+              <span>Docker</span>
+              <span>Nginx Proxy Manager</span>
+              <span>Cloudflare</span>
+            </div>
+          </article>
+
+          <article class="project-card glass-card reveal">
+            <div class="project-icon">02</div>
+            <h3>Homelab</h3>
+            <p>A self-hosted infrastructure setup using Proxmox, Docker, Portainer and reverse proxy routing.</p>
+            <div class="tech-list">
+              <span>Proxmox</span>
+              <span>Docker</span>
+              <span>Portainer</span>
+              <span>Nginx Proxy Manager</span>
+              <span>Cloudflare</span>
+            </div>
+          </article>
+
+          <article class="project-card glass-card reveal">
+            <div class="project-icon">03</div>
+            <h3>Intralink Chat</h3>
+            <p>A school chat web application with login, posts, likes, dark mode and MySQL database.</p>
+            <div class="tech-list">
+              <span>PHP</span>
+              <span>MySQL</span>
+              <span>Twig</span>
+              <span>Bootstrap</span>
+            </div>
+          </article>
+
+          <article class="project-card glass-card reveal">
+            <div class="project-icon">04</div>
+            <h3>Movie API</h3>
+            <p>A REST API project with JWT authentication, users and movie data.</p>
+            <div class="tech-list">
+              <span>PHP</span>
+              <span>MySQL</span>
+              <span>JWT</span>
+              <span>REST API</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="homelab">
+      <div class="container homelab-layout">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Homelab Status Preview</p>
+          <h2>Future live dashboard</h2>
+          <p class="section-copy">A visual preview for the self-hosted stack that powers the portfolio.</p>
+        </div>
+        <div class="status-grid glass-card reveal" aria-label="Static homelab status preview">
+          <div class="status-item">
+            <span class="status-dot"></span>
+            <div>
+              <strong>Proxmox</strong>
+              <p>Online</p>
+            </div>
+          </div>
+          <div class="status-item">
+            <span class="status-dot"></span>
+            <div>
+              <strong>Docker</strong>
+              <p>Online</p>
+            </div>
+          </div>
+          <div class="status-item">
+            <span class="status-dot"></span>
+            <div>
+              <strong>Portfolio</strong>
+              <p>Online</p>
+            </div>
+          </div>
+          <div class="status-item">
+            <span class="status-dot"></span>
+            <div>
+              <strong>Cloudflare</strong>
+              <p>Connected</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cv-section" id="cv">
+      <div class="container glass-card cv-card reveal">
+        <div>
+          <p class="eyebrow">CV</p>
+          <h2>Interested in working together?</h2>
+          <p>Download my CV for internship and job application details.</p>
+        </div>
+        <a class="btn btn-primary" href="assets/documents/cv.pdf" download>Download CV</a>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <p class="eyebrow">Contact</p>
+          <h2>Let’s connect</h2>
+        </div>
+        <div class="contact-grid">
+          <a class="contact-card glass-card reveal" href="mailto:daniel.schuemi@gmail.com">
+            <span>Email</span>
+            <strong>daniel.schuemi@gmail.com</strong>
+          </a>
+          <a class="contact-card glass-card reveal" href="https://github.com/TM-Dani" target="_blank" rel="noreferrer">
+            <span>GitHub</span>
+            <strong>github.com/TM-Dani</strong>
+          </a>
+          <a class="contact-card glass-card reveal" href="https://daniel-schumacher.net" target="_blank" rel="noreferrer">
+            <span>Website</span>
+            <strong>daniel-schumacher.net</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Built and self-hosted by Daniel Schumacher.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
