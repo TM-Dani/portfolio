@@ -3,6 +3,23 @@ const navToggle = document.querySelector("[data-nav-toggle]");
 const navLinks = document.querySelector("[data-nav-links]");
 const rippleTargets = document.querySelectorAll(".ripple");
 
+function normalizeHomeUrl() {
+  const isIndexPage = /\/index\.html$/i.test(window.location.pathname);
+  const isRootPage = window.location.pathname === "/" || window.location.pathname === "";
+  const isHomeHash = window.location.hash === "#home";
+  const shouldNormalize = (isIndexPage && (!window.location.hash || isHomeHash)) || (isRootPage && isHomeHash);
+
+  if (!shouldNormalize) {
+    return;
+  }
+
+  const cleanPath = isIndexPage
+    ? window.location.pathname.replace(/index\.html$/i, "")
+    : window.location.pathname;
+
+  window.history.replaceState(null, document.title, `${cleanPath}${window.location.search}`);
+}
+
 function setHeaderState() {
   if (header) {
     header.classList.toggle("scrolled", window.scrollY > 18);
@@ -47,5 +64,6 @@ rippleTargets.forEach((target) => {
   });
 });
 
+normalizeHomeUrl();
 setHeaderState();
 window.addEventListener("scroll", setHeaderState, { passive: true });
