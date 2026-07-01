@@ -1,10 +1,16 @@
-const header = document.querySelector(".site-header");
-const navToggle = document.querySelector(".nav-toggle");
-const navLinks = document.querySelector(".nav-links");
-const revealItems = document.querySelectorAll(".reveal");
+const header = document.querySelector("[data-header]");
+const navToggle = document.querySelector("[data-nav-toggle]");
+const navLinks = document.querySelector("[data-nav-links]");
+const rippleTargets = document.querySelectorAll(".ripple");
 
-function updateHeaderState() {
-  header.classList.toggle("scrolled", window.scrollY > 24);
+function setHeaderState() {
+  header.classList.toggle("scrolled", window.scrollY > 18);
+}
+
+function closeMobileNavigation() {
+  navLinks.classList.remove("open");
+  navToggle.setAttribute("aria-expanded", "false");
+  document.body.classList.remove("nav-open");
 }
 
 navToggle.addEventListener("click", () => {
@@ -15,23 +21,23 @@ navToggle.addEventListener("click", () => {
 
 navLinks.addEventListener("click", (event) => {
   if (event.target.matches("a")) {
-    navLinks.classList.remove("open");
-    navToggle.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("nav-open");
+    closeMobileNavigation();
   }
 });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
+rippleTargets.forEach((target) => {
+  target.addEventListener("click", (event) => {
+    const rect = target.getBoundingClientRect();
+    const circle = document.createElement("span");
+
+    circle.className = "ripple-circle";
+    circle.style.left = `${event.clientX - rect.left}px`;
+    circle.style.top = `${event.clientY - rect.top}px`;
+    target.append(circle);
+
+    window.setTimeout(() => circle.remove(), 600);
   });
-}, {
-  threshold: 0.16
 });
 
-revealItems.forEach((item) => observer.observe(item));
-updateHeaderState();
-window.addEventListener("scroll", updateHeaderState);
+setHeaderState();
+window.addEventListener("scroll", setHeaderState, { passive: true });

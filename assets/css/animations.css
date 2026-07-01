@@ -1,0 +1,135 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.floating-card {
+  animation: float-card 7s ease-in-out infinite;
+}
+
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 4px;
+  background: var(--blue);
+  vertical-align: -0.12em;
+  animation: caret-blink 900ms steps(2, start) infinite;
+}
+
+.terminal-lines p {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: terminal-line 520ms ease forwards;
+}
+
+.terminal-lines p:nth-child(1) {
+  animation-delay: 200ms;
+}
+
+.terminal-lines p:nth-child(2) {
+  animation-delay: 560ms;
+}
+
+.terminal-lines p:nth-child(3) {
+  animation-delay: 920ms;
+}
+
+.terminal-lines p:nth-child(4) {
+  animation-delay: 1280ms;
+}
+
+.terminal-lines p:nth-child(5) {
+  animation-delay: 1640ms;
+}
+
+.online-dot::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  border-radius: 50%;
+  animation: status-pulse 1.9s ease-out infinite;
+}
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple .ripple-circle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.34);
+  transform: translate(-50%, -50%) scale(1);
+  animation: ripple 580ms ease-out forwards;
+}
+
+@keyframes float-card {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes terminal-line {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes status-pulse {
+  from {
+    opacity: 0.86;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+@keyframes ripple {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

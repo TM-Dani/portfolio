@@ -1,0 +1,167 @@
+@media (min-width: 680px) {
+  .shell {
+    width: min(var(--shell), calc(100% - 48px));
+  }
+
+  h1 {
+    font-size: 5.4rem;
+  }
+
+  h2 {
+    font-size: 2.8rem;
+  }
+
+  .hero-grid,
+  .about-grid,
+  .dashboard-header,
+  .contact-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.82fr);
+    align-items: center;
+  }
+
+  .hero-visual {
+    justify-self: end;
+    width: min(100%, 430px);
+  }
+
+  .skill-categories,
+  .projects-grid,
+  .dashboard-grid,
+  .contact-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 118px 0;
+  }
+
+  h1 {
+    font-size: 6.5rem;
+  }
+
+  h2 {
+    font-size: 3.4rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.78fr);
+  }
+
+  .projects-grid,
+  .dashboard-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .skill-categories {
+    grid-template-columns: 0.86fr 1.14fr;
+  }
+
+  .contact-panel {
+    grid-template-columns: 0.8fr 1.2fr;
+    padding: 34px;
+  }
+}
+
+@media (max-width: 760px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: var(--nav-height);
+    left: 16px;
+    right: 16px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(2, 4, 13, 0.95);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 12px 14px;
+  }
+
+  .hero {
+    padding-top: 52px;
+  }
+
+  h1 {
+    font-size: 3.45rem;
+  }
+
+  h2 {
+    font-size: 2.15rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .button,
+  .small-button {
+    width: 100%;
+  }
+
+  .project-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 460px) {
+  .shell {
+    width: min(100% - 28px, var(--shell));
+  }
+
+  .section {
+    padding: 70px 0;
+  }
+
+  h1 {
+    font-size: 2.85rem;
+  }
+
+  h2 {
+    font-size: 1.9rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .terminal-card,
+  .stack-card,
+  .skill-category,
+  .project-body,
+  .status-card,
+  .contact-panel {
+    padding: 18px;
+  }
+
+  .timeline-item {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline::before {
+    display: none;
+  }
+}
