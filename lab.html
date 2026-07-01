@@ -93,12 +93,12 @@
           <p class="section-lead">These cards are prepared for future live API data.</p>
         </div>
         <div class="metric-grid">
-          <article class="metric-card glass reveal" data-api-target="metrics.cpu"><span>CPU Usage</span><strong>10%</strong><div class="metric-bar"><i style="width: 10%"></i></div></article>
-          <article class="metric-card glass reveal" data-api-target="metrics.ram"><span>RAM Usage</span><strong>22%</strong><div class="metric-bar"><i style="width: 22%"></i></div></article>
-          <article class="metric-card glass reveal" data-api-target="metrics.storage"><span>Storage Used</span><strong>52%</strong><div class="metric-bar"><i style="width: 52%"></i></div></article>
-          <article class="metric-card glass reveal" data-api-target="metrics.containers"><span>Containers</span><strong>3 running</strong><div class="metric-state">Healthy</div></article>
-          <article class="metric-card glass reveal" data-api-target="metrics.uptime"><span>Uptime</span><strong>1 day+</strong><div class="metric-state">Stable</div></article>
-          <article class="metric-card glass reveal" data-api-target="metrics.ssl"><span>SSL</span><strong>Valid</strong><div class="metric-state">HTTPS</div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.cpu"><span>CPU Usage</span><strong data-metric-value="cpu">Loading</strong><div class="metric-bar"><i data-metric-bar="cpu" style="width: 0%"></i></div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.ram"><span>RAM Usage</span><strong data-metric-value="ram">Loading</strong><div class="metric-bar"><i data-metric-bar="ram" style="width: 0%"></i></div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.storage"><span>Storage Used</span><strong data-metric-value="storage">Loading</strong><div class="metric-bar"><i data-metric-bar="storage" style="width: 0%"></i></div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.containers"><span>Containers</span><strong data-metric-value="containers">Loading</strong><div class="metric-state" data-metric-state="containers">Healthy</div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.uptime"><span>Uptime</span><strong data-metric-value="uptime">Loading</strong><div class="metric-state" data-metric-state="uptime">Stable</div></article>
+          <article class="metric-card glass reveal" data-api-target="metrics.ssl"><span>SSL</span><strong data-metric-value="ssl">Loading</strong><div class="metric-state" data-metric-state="ssl">HTTPS</div></article>
         </div>
       </div>
     </section>
@@ -208,5 +208,103 @@
 
   <script src="assets/js/animations.js"></script>
   <script src="assets/js/main.js"></script>
+  <script>
+    const LAB_STATUS_API_URL = 'http://192.168.1.129:3000/api/status';
+    const REFRESH_INTERVAL_MS = 30000;
+
+    const metrics = {
+      cpu: {
+        value: document.querySelector('[data-metric-value="cpu"]'),
+        bar: document.querySelector('[data-metric-bar="cpu"]'),
+        card: document.querySelector('[data-api-target="metrics.cpu"]'),
+        format: (value) => `${value}%`,
+      },
+      ram: {
+        value: document.querySelector('[data-metric-value="ram"]'),
+        bar: document.querySelector('[data-metric-bar="ram"]'),
+        card: document.querySelector('[data-api-target="metrics.ram"]'),
+        format: (value) => `${value}%`,
+      },
+      storage: {
+        value: document.querySelector('[data-metric-value="storage"]'),
+        bar: document.querySelector('[data-metric-bar="storage"]'),
+        card: document.querySelector('[data-api-target="metrics.storage"]'),
+        format: (value) => `${value}%`,
+      },
+      containers: {
+        value: document.querySelector('[data-metric-value="containers"]'),
+        state: document.querySelector('[data-metric-state="containers"]'),
+        card: document.querySelector('[data-api-target="metrics.containers"]'),
+        stateText: 'Healthy',
+        format: (value) => value,
+      },
+      uptime: {
+        value: document.querySelector('[data-metric-value="uptime"]'),
+        state: document.querySelector('[data-metric-state="uptime"]'),
+        card: document.querySelector('[data-api-target="metrics.uptime"]'),
+        stateText: 'Stable',
+        format: (value) => value,
+      },
+      ssl: {
+        value: document.querySelector('[data-metric-value="ssl"]'),
+        state: document.querySelector('[data-metric-state="ssl"]'),
+        card: document.querySelector('[data-api-target="metrics.ssl"]'),
+        stateText: 'HTTPS',
+        format: (value) => value,
+      },
+    };
+
+    function setMetricOffline(metric) {
+      metric.value.textContent = 'Offline';
+      metric.card.classList.add('metric-card-offline');
+
+      if (metric.bar) {
+        metric.bar.style.width = '0%';
+      }
+
+      if (metric.state) {
+        metric.state.textContent = 'Offline';
+      }
+    }
+
+    function updateMetric(metric, value) {
+      metric.value.textContent = metric.format(value);
+      metric.card.classList.remove('metric-card-offline');
+
+      if (metric.bar) {
+        metric.bar.style.width = `${Math.max(0, Math.min(Number(value), 100))}%`;
+      }
+
+      if (metric.state) {
+        metric.state.textContent = metric.stateText;
+      }
+    }
+
+    async function fetchLabStatus() {
+      try {
+        const response = await fetch(LAB_STATUS_API_URL, { cache: 'no-store' });
+
+        if (!response.ok) {
+          throw new Error(`Portfolio API returned ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        Object.entries(metrics).forEach(([key, metric]) => {
+          if (data[key] === undefined || data[key] === null) {
+            setMetricOffline(metric);
+            return;
+          }
+
+          updateMetric(metric, data[key]);
+        });
+      } catch (error) {
+        Object.values(metrics).forEach(setMetricOffline);
+      }
+    }
+
+    fetchLabStatus();
+    setInterval(fetchLabStatus, REFRESH_INTERVAL_MS);
+  </script>
 </body>
 </html>

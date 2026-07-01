@@ -1155,6 +1155,23 @@ h3 {
   font-weight: 950;
 }
 
+.metric-card.metric-card-offline {
+  border-color: rgba(251, 113, 133, 0.42);
+  background:
+    radial-gradient(circle at 86% 12%, rgba(251, 113, 133, 0.2), transparent 34%),
+    rgba(69, 10, 10, 0.46);
+}
+
+.metric-card.metric-card-offline strong {
+  color: var(--danger);
+}
+
+.metric-card.metric-card-offline .metric-state {
+  border-color: rgba(251, 113, 133, 0.28);
+  background: rgba(251, 113, 133, 0.1);
+  color: var(--danger);
+}
+
 .metric-bar {
   height: 8px;
   overflow: hidden;
