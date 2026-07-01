@@ -33,7 +33,14 @@ function setupCleanSectionNavigation() {
       }
 
       closeMobileNavigation();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const headerOffset = header ? header.offsetHeight : 0;
+      const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: Math.max(targetPosition, 0),
+        behavior: "smooth",
+      });
+
       window.history.replaceState(null, "", window.location.pathname);
     });
   });
