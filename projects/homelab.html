@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Daniel Schumacher's self-hosted Proxmox homelab infrastructure project.">
+  <title>Homelab Infrastructure | Daniel Schumacher</title>
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/animations.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+</head>
+<body class="project-page">
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="page-glow page-glow-one" aria-hidden="true"></div>
+  <div class="page-glow page-glow-two" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <nav class="nav shell" aria-label="Project navigation">
+      <a class="brand" href="../index.html" aria-label="Back to Daniel Schumacher portfolio">
+        <span class="brand-mark">DS</span>
+      </a>
+      <div class="nav-links project-nav-links">
+        <a href="../index.html">Portfolio</a>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#services">Services</a>
+        <a href="#future">Future</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-hero section" data-parallax>
+      <div class="hero-orbit" aria-hidden="true"></div>
+      <div class="shell project-hero-grid">
+        <div class="project-hero-copy reveal">
+          <p class="eyebrow">Project Detail</p>
+          <h1>Homelab Infrastructure</h1>
+          <p class="hero-description">
+            Self-hosted infrastructure built with Proxmox, Docker, Cloudflare and Nginx Proxy Manager.
+          </p>
+          <div class="deployment-badge" aria-label="Homelab status">
+            <span>Self-hosted</span>
+            <span>Online</span>
+            <span>HTTPS</span>
+          </div>
+          <a class="button button-primary ripple" href="../index.html">Back to Homepage</a>
+        </div>
+        <article class="terminal-card glass floating-card reveal" aria-label="Homelab terminal preview">
+          <div class="terminal-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="terminal-lines">
+            <p><span class="prompt">$</span> proxmox status</p>
+            <p class="terminal-success">node online</p>
+            <p class="terminal-success">docker containers running</p>
+            <p class="terminal-success">cloudflare dns active</p>
+            <p><span class="prompt">https:</span> daniel-schumacher.net</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="shell detail-split">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Overview</p>
+          <h2>Learning infrastructure by running real services.</h2>
+        </div>
+        <article class="detail-copy glass reveal">
+          <p>I built this homelab to learn real-world infrastructure, networking, Linux, Docker and deployment. It hosts my portfolio website and will be expanded with more services over time.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Architecture</p>
+          <h2>From repository to live website.</h2>
+        </div>
+        <div class="hosting-flow glass reveal" aria-label="Homelab architecture diagram">
+          <div class="flow-card">GitHub</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Automatic Deploy Script</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Docker Container</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Nginx Proxy Manager</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Swisscom Router</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card">Cloudflare DNS</div>
+          <div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="flow-card domain-card">daniel-schumacher.net</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Current Services</p>
+          <h2>Core services running in the homelab.</h2>
+        </div>
+        <div class="service-grid">
+          <article class="service-card glass reveal"><span class="online-dot"></span><h3>Proxmox VE</h3><p>Virtualization host for the homelab environment.</p><strong>Online</strong><span class="service-badge">Proxmox</span></article>
+          <article class="service-card glass reveal"><span class="online-dot"></span><h3>Docker</h3><p>Container runtime for deploying portfolio and future services.</p><strong>Online</strong><span class="service-badge">Docker</span></article>
+          <article class="service-card glass reveal"><span class="online-dot"></span><h3>Portainer</h3><p>Container management interface for keeping services organized.</p><strong>Online</strong><span class="service-badge">Portainer</span></article>
+          <article class="service-card glass reveal"><span class="online-dot"></span><h3>Nginx Proxy Manager</h3><p>Reverse proxy for routing domains to internal services.</p><strong>Online</strong><span class="service-badge">Nginx</span></article>
+          <article class="service-card glass reveal"><span class="online-dot"></span><h3>Cloudflare DNS</h3><p>Public DNS management and edge protection for the domain.</p><strong>Online</strong><span class="service-badge">Cloudflare</span></article>
+          <article class="service-card glass reveal"><span class="online-dot"></span><h3>Portfolio Website</h3><p>Static portfolio hosted from the homelab stack.</p><strong>Online</strong><span class="service-badge">Website</span></article>
+          <article class="service-card glass reveal"><span class="online-dot"></span><h3>GitHub Deployment</h3><p>Deployment workflow pulling code from GitHub into Docker.</p><strong>Online</strong><span class="service-badge">GitHub</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">What I learned</p>
+          <h2>Practical infrastructure skills.</h2>
+        </div>
+        <div class="learning-grid">
+          <article class="mini-card glass reveal">DNS configuration</article>
+          <article class="mini-card glass reveal">Port forwarding</article>
+          <article class="mini-card glass reveal">Reverse proxy setup</article>
+          <article class="mini-card glass reveal">SSL certificates with Let's Encrypt</article>
+          <article class="mini-card glass reveal">Docker containers</article>
+          <article class="mini-card glass reveal">GitHub deployment workflow</article>
+          <article class="mini-card glass reveal">Linux server basics</article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="future">
+      <div class="shell">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Future Improvements</p>
+          <h2>Next steps for the homelab.</h2>
+        </div>
+        <div class="future-grid">
+          <article class="mini-card glass reveal">Live status dashboard</article>
+          <article class="mini-card glass reveal">Uptime monitoring</article>
+          <article class="mini-card glass reveal">Nextcloud</article>
+          <article class="mini-card glass reveal">Backups</article>
+          <article class="mini-card glass reveal">GitHub webhook deployment</article>
+          <article class="mini-card glass reveal">Custom email domain</article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell cv-panel glass reveal">
+        <div>
+          <p class="eyebrow">Hosted here</p>
+          <h2>This portfolio is hosted on the infrastructure described above.</h2>
+        </div>
+        <a class="button button-primary cv-button ripple" href="../index.html">Back to Portfolio</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <p>Built with HTML, CSS and JavaScript</p>
+      <p>Hosted on my own Proxmox server</p>
+      <p>Powered by Docker, Cloudflare and Nginx Proxy Manager</p>
+      <p class="footer-status">Self-hosted • Docker • Cloudflare • HTTPS</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/animations.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

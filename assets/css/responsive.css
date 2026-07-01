@@ -25,7 +25,6 @@
   }
 
   .skill-categories,
-  .projects-grid,
   .dashboard-grid,
   .contact-links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -57,7 +56,6 @@
     grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.78fr);
   }
 
-  .projects-grid,
   .dashboard-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -69,6 +67,16 @@
   .contact-panel {
     grid-template-columns: 0.8fr 1.2fr;
     padding: 34px;
+  }
+
+  .project-nav-links {
+    display: flex;
+  }
+
+  .project-hero-grid,
+  .detail-split {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.76fr);
+    align-items: center;
   }
 
   .cv-panel {
@@ -112,6 +120,11 @@
 
   .hero {
     padding-top: 52px;
+  }
+
+  .project-hero {
+    min-height: auto;
+    padding-top: 70px;
   }
 
   h1 {
@@ -176,6 +189,7 @@
   .skill-category,
   .project-body,
   .status-card,
+  .service-card,
   .contact-panel,
   .cv-panel {
     padding: 18px;

@@ -4,26 +4,34 @@ const navLinks = document.querySelector("[data-nav-links]");
 const rippleTargets = document.querySelectorAll(".ripple");
 
 function setHeaderState() {
-  header.classList.toggle("scrolled", window.scrollY > 18);
+  if (header) {
+    header.classList.toggle("scrolled", window.scrollY > 18);
+  }
 }
 
 function closeMobileNavigation() {
+  if (!navLinks || !navToggle) {
+    return;
+  }
+
   navLinks.classList.remove("open");
   navToggle.setAttribute("aria-expanded", "false");
   document.body.classList.remove("nav-open");
 }
 
-navToggle.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
-  document.body.classList.toggle("nav-open", isOpen);
-});
+if (navToggle && navLinks) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    document.body.classList.toggle("nav-open", isOpen);
+  });
 
-navLinks.addEventListener("click", (event) => {
-  if (event.target.matches("a")) {
-    closeMobileNavigation();
-  }
-});
+  navLinks.addEventListener("click", (event) => {
+    if (event.target.matches("a")) {
+      closeMobileNavigation();
+    }
+  });
+}
 
 rippleTargets.forEach((target) => {
   target.addEventListener("click", (event) => {
