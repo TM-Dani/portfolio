@@ -22,19 +22,19 @@ function cleanCurrentUrl() {
 
 function setupCleanSectionNavigation() {
   document.addEventListener("click", (event) => {
-    const link = event.target.closest('a[href^="#"]');
+    const link = event.target.closest("[data-scroll-target]");
 
     if (!link) {
       return;
     }
 
-    const targetId = link.getAttribute("href");
+    const targetId = link.dataset.scrollTarget;
 
-    if (!targetId || targetId === "#") {
+    if (!targetId) {
       return;
     }
 
-    const target = document.querySelector(targetId);
+    const target = document.getElementById(targetId);
 
     if (!target) {
       return;
@@ -43,7 +43,7 @@ function setupCleanSectionNavigation() {
     event.preventDefault();
     closeMobileNavigation();
     target.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState(null, document.title, getCleanUrl());
+    window.history.replaceState(null, "", window.location.pathname);
   });
 }
 
