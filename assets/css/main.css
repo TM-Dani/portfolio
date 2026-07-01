@@ -686,6 +686,115 @@ h3 {
   box-shadow: 0 24px 70px rgba(124, 58, 237, 0.36);
 }
 
+/* Project screenshots */
+.screenshot-group {
+  display: grid;
+  gap: 18px;
+}
+
+.screenshot-group + .screenshot-group {
+  margin-top: 46px;
+}
+
+.screenshot-group-heading {
+  max-width: 720px;
+}
+
+.screenshot-group-heading h3 {
+  margin-bottom: 8px;
+  font-size: 1.35rem;
+}
+
+.screenshot-group-heading p,
+.screenshot-card p {
+  color: var(--muted);
+}
+
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  gap: 18px;
+}
+
+.screenshot-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.screenshot-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(96, 165, 250, 0.42);
+  box-shadow: 0 26px 76px rgba(37, 99, 235, 0.18);
+}
+
+.screenshot-card figcaption {
+  color: var(--blue);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.screenshot-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.22), transparent 36%),
+    linear-gradient(135deg, rgba(37, 99, 235, 0.16), rgba(2, 6, 23, 0.86));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 18px 54px rgba(37, 99, 235, 0.12);
+}
+
+.screenshot-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.screenshot-frame img.focus-left {
+  object-position: left center;
+}
+
+.screenshot-frame img.focus-right {
+  object-position: right center;
+}
+
+.screenshot-frame img.focus-top {
+  object-position: center top;
+}
+
+.screenshot-frame img.focus-center {
+  object-position: center;
+}
+
+.screenshot-placeholder {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  color: var(--muted-strong);
+  text-align: center;
+}
+
+.screenshot-placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px dashed rgba(148, 163, 184, 0.24);
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.screenshot-placeholder span {
+  position: relative;
+  z-index: 1;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
 /* API-ready status cards */
 .dashboard-header {
   display: grid;

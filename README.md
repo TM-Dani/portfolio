@@ -46,6 +46,7 @@ assets/
 - Cursor glow
 - Button ripple effects
 - Premium project cards with "What I built" and "What I learned"
+- Cropped project screenshots focused on relevant UI areas
 - Static homelab dashboard prepared for future live status data
 - Hosting architecture section
 - Download CV callout
