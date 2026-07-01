@@ -569,9 +569,9 @@ h3 {
   position: relative;
   min-height: 440px;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr;
   gap: 16px;
-  padding: 24px;
+  padding: 24px 24px 74px;
   border-bottom: 1px solid rgba(148, 163, 184, 0.14);
   background:
     radial-gradient(circle at 18% 12%, rgba(var(--project-accent-rgb), 0.26), transparent 34%),
@@ -610,6 +610,7 @@ h3 {
 
 .vertical-flow {
   align-self: center;
+  margin: auto 0;
   display: grid;
   justify-items: center;
   gap: 9px;
@@ -684,11 +685,14 @@ h3 {
 }
 
 .project-status {
-  justify-self: start;
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 8px 11px;
+  z-index: 2;
 }
 
 .project-status .online-dot {
@@ -703,8 +707,12 @@ h3 {
 .project-body {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 22px;
+  gap: 18px;
+  padding: 26px 22px 22px;
+}
+
+.project-body h3 + .project-detail {
+  margin-top: 2px;
 }
 
 .project-body h3 {
