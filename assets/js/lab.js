@@ -256,13 +256,32 @@ function getContainerState(container) {
   };
 }
 
-function appendTextCell(row, value, useCode = false) {
-  const cell = document.createElement("td");
-  const content = useCode ? document.createElement("code") : document.createElement("span");
+function simplifyPorts(value) {
+  const ports = String(value || "").trim();
 
-  content.textContent = value || "None";
-  cell.append(content);
-  row.append(cell);
+  if (!ports || ports === "None") {
+    return "None";
+  }
+
+  return ports
+    .split(",")
+    .map((port) => port.trim())
+    .filter(Boolean)
+    .map((port) => port.replace(/0\.0\.0\.0:/g, "").replace(/\[::\]:/g, ""))
+    .join(", ");
+}
+
+function createContainerMeta(label, value, useCode = false) {
+  const item = document.createElement("div");
+  const labelElement = document.createElement("span");
+  const valueElement = useCode ? document.createElement("code") : document.createElement("strong");
+
+  item.className = "docker-container-meta-item";
+  labelElement.textContent = label;
+  valueElement.textContent = value || "None";
+  item.append(labelElement, valueElement);
+
+  return item;
 }
 
 function renderContainers(containers) {
@@ -270,26 +289,37 @@ function renderContainers(containers) {
     return;
   }
 
-  const rows = document.createDocumentFragment();
+  const cards = document.createDocumentFragment();
 
   containers.forEach((container) => {
-    const row = document.createElement("tr");
-    const statusCell = document.createElement("td");
+    const card = document.createElement("article");
+    const header = document.createElement("div");
+    const titleWrap = document.createElement("div");
+    const name = document.createElement("h3");
+    const image = document.createElement("code");
     const status = document.createElement("span");
     const state = getContainerState(container);
+    const meta = document.createElement("div");
 
+    card.className = "docker-container-card";
+    header.className = "docker-container-card-header";
+    titleWrap.className = "docker-container-title";
+    name.textContent = container.name || "Unnamed container";
+    image.textContent = container.image || "Unknown image";
     status.className = state.className;
     status.textContent = state.label;
-    statusCell.append(status);
-    row.append(statusCell);
-    appendTextCell(row, container.name);
-    appendTextCell(row, container.image, true);
-    appendTextCell(row, container.status);
-    appendTextCell(row, container.ports, true);
-    rows.append(row);
+    titleWrap.append(name, image);
+    header.append(titleWrap, status);
+    meta.className = "docker-container-meta";
+    meta.append(
+      createContainerMeta("Docker status", container.status),
+      createContainerMeta("Ports", simplifyPorts(container.ports), true),
+    );
+    card.append(header, meta);
+    cards.append(card);
   });
 
-  containersBody.replaceChildren(rows);
+  containersBody.replaceChildren(cards);
 }
 
 function setContainerLoading(isLoading) {
