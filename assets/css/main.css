@@ -1384,26 +1384,36 @@ h3 {
   font-weight: 800;
 }
 
+.docker-stat-icon,
 .docker-summary-icon {
   flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(96, 165, 250, 0.2);
   border-radius: 12px;
   background: rgba(15, 23, 42, 0.72);
   color: var(--blue);
 }
 
+.docker-stat-icon svg,
 .docker-summary-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
+  display: block;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.docker-stat-icon svg *,
+.docker-summary-icon svg * {
+  fill: none;
+  stroke: currentColor;
 }
 
 .docker-summary-total .docker-summary-icon {

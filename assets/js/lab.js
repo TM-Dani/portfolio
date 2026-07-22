@@ -65,6 +65,7 @@ const containersRefreshButton = document.querySelector("[data-containers-refresh
 const containersRetryButton = document.querySelector("[data-containers-retry]");
 let isFetchingContainers = false;
 let hasContainerData = false;
+let currentContainerCount = 0;
 let containerLastUpdatedAt = null;
 
 function clampPercentage(value) {
@@ -518,36 +519,68 @@ function setContainerSummaryVisible(isVisible) {
   }
 }
 
+function setContainersFirstLoadLoading() {
+  setContainerLoading(true, true);
+  setContainerError(false);
+  setContainerWarning(false);
+  setContainerEmpty(false);
+  setContainerTable(false);
+  setContainerSummaryVisible(false);
+}
+
+function setContainersSuccess(containers, data) {
+  currentContainerCount = containers.length;
+  setContainerError(false);
+  setContainerWarning(false);
+  setContainerEmpty(containers.length === 0);
+  setContainerSummaryVisible(true);
+  setContainerTable(containers.length > 0);
+  setContainerSummary(data);
+  renderContainers(containers);
+  hasContainerData = true;
+}
+
+function setContainersFirstLoadError() {
+  setContainerLoading(false, false);
+  setContainerError(true);
+  setContainerWarning(false);
+  setContainerEmpty(false);
+  setContainerTable(false);
+  setContainerSummaryVisible(false);
+}
+
+function setContainersStaleWarning() {
+  setContainerError(false);
+  setContainerWarning(true);
+  setContainerEmpty(currentContainerCount === 0);
+  setContainerTable(currentContainerCount > 0);
+  setContainerSummaryVisible(true);
+}
+
 async function fetchContainers() {
   if (isFetchingContainers) {
     return;
   }
 
   isFetchingContainers = true;
-  setContainerLoading(true, !hasContainerData);
-  setContainerWarning(false);
+
+  if (hasContainerData) {
+    setContainerLoading(true, false);
+    setContainerWarning(false);
+  } else {
+    setContainersFirstLoadLoading();
+  }
 
   try {
     const data = await fetchJson(LAB_CONTAINERS_API_URL);
     const containers = Array.isArray(data.containers) ? data.containers : [];
 
-    setContainerError(false);
-    setContainerWarning(false);
-    setContainerSummary(data);
-    renderContainers(containers);
-    hasContainerData = true;
-    setContainerSummaryVisible(true);
-    setContainerEmpty(containers.length === 0);
-    setContainerTable(containers.length > 0);
+    setContainersSuccess(containers, data);
   } catch (error) {
     if (hasContainerData) {
-      setContainerWarning(true);
-      setContainerError(false);
+      setContainersStaleWarning();
     } else {
-      setContainerError(true);
-      setContainerSummaryVisible(false);
-      setContainerTable(false);
-      setContainerEmpty(false);
+      setContainersFirstLoadError();
     }
   } finally {
     isFetchingContainers = false;
