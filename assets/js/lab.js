@@ -52,16 +52,20 @@ const containerSummaryElements = {
   running: document.querySelector('[data-container-summary="running"]'),
   stopped: document.querySelector('[data-container-summary="stopped"]'),
   lastUpdated: document.querySelector('[data-container-summary="lastUpdated"]'),
+  lastUpdatedExact: document.querySelector("[data-container-summary-exact]"),
 };
+const containersSummary = document.querySelector("[data-containers-summary]");
 const containersBody = document.querySelector("[data-containers-body]");
 const containersTable = document.querySelector("[data-containers-table]");
 const containersLoading = document.querySelector("[data-containers-loading]");
 const containersError = document.querySelector("[data-containers-error]");
+const containersWarning = document.querySelector("[data-containers-warning]");
 const containersEmpty = document.querySelector("[data-containers-empty]");
 const containersRefreshButton = document.querySelector("[data-containers-refresh]");
 const containersRetryButton = document.querySelector("[data-containers-retry]");
 let isFetchingContainers = false;
 let hasContainerData = false;
+let containerLastUpdatedAt = null;
 
 function clampPercentage(value) {
   const number = Number(value);
@@ -113,6 +117,31 @@ function formatLocalDateTime(value) {
     dateStyle: "medium",
     timeStyle: "short",
   });
+}
+
+function getRelativeTime(value) {
+  if (!value) {
+    return "Updated unknown";
+  }
+
+  const elapsedSeconds = Math.max(0, Math.floor((Date.now() - value.getTime()) / 1000));
+
+  if (elapsedSeconds < 5) {
+    return "Updated just now";
+  }
+
+  if (elapsedSeconds < 60) {
+    return `Updated ${elapsedSeconds} seconds ago`;
+  }
+
+  const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+
+  if (elapsedMinutes < 60) {
+    return `Updated ${elapsedMinutes} ${elapsedMinutes === 1 ? "minute" : "minutes"} ago`;
+  }
+
+  const elapsedHours = Math.floor(elapsedMinutes / 60);
+  return `Updated ${elapsedHours} ${elapsedHours === 1 ? "hour" : "hours"} ago`;
 }
 
 function setMetricsOffline() {
@@ -228,9 +257,28 @@ function setContainerSummary(data) {
     containerSummaryElements.stopped.textContent = String(data.stopped ?? 0);
   }
 
-  if (containerSummaryElements.lastUpdated) {
-    containerSummaryElements.lastUpdated.textContent = formatLocalDateTime(data.lastUpdated);
+  containerLastUpdatedAt = data.lastUpdated ? new Date(data.lastUpdated) : new Date();
+
+  if (Number.isNaN(containerLastUpdatedAt.getTime())) {
+    containerLastUpdatedAt = new Date();
   }
+
+  updateContainerRelativeTime();
+
+  if (containerSummaryElements.lastUpdatedExact) {
+    containerSummaryElements.lastUpdatedExact.textContent = formatLocalDateTime(containerLastUpdatedAt);
+  }
+}
+
+function updateContainerRelativeTime() {
+  if (!containerSummaryElements.lastUpdated || !containerLastUpdatedAt) {
+    return;
+  }
+
+  const exactTime = formatLocalDateTime(containerLastUpdatedAt);
+
+  containerSummaryElements.lastUpdated.textContent = getRelativeTime(containerLastUpdatedAt);
+  containerSummaryElements.lastUpdated.setAttribute("title", exactTime);
 }
 
 function getContainerState(container) {
@@ -260,28 +308,147 @@ function simplifyPorts(value) {
   const ports = String(value || "").trim();
 
   if (!ports || ports === "None") {
-    return "None";
+    return [];
   }
 
-  return ports
+  return [...new Set(ports
     .split(",")
     .map((port) => port.trim())
     .filter(Boolean)
-    .map((port) => port.replace(/0\.0\.0\.0:/g, "").replace(/\[::\]:/g, ""))
-    .join(", ");
+    .map((port) => port
+      .replace(/0\.0\.0\.0:/g, "")
+      .replace(/\[::\]:/g, "")
+      .replace(/\/tcp|\/udp/g, "")
+      .replace("->", " \u2192 "))
+    .map((port) => port.trim())
+    .filter(Boolean))];
 }
 
-function createContainerMeta(label, value, useCode = false) {
-  const item = document.createElement("div");
-  const labelElement = document.createElement("span");
-  const valueElement = useCode ? document.createElement("code") : document.createElement("strong");
+function splitImageName(value) {
+  const image = String(value || "").trim();
 
-  item.className = "docker-container-meta-item";
-  labelElement.textContent = label;
-  valueElement.textContent = value || "None";
-  item.append(labelElement, valueElement);
+  if (!image) {
+    return {
+      repository: "Unknown image",
+      tag: "",
+    };
+  }
 
-  return item;
+  const lastSlash = image.lastIndexOf("/");
+  const lastColon = image.lastIndexOf(":");
+
+  if (lastColon > lastSlash) {
+    return {
+      repository: image.slice(0, lastColon),
+      tag: image.slice(lastColon + 1),
+    };
+  }
+
+  return {
+    repository: image,
+    tag: "",
+  };
+}
+
+function createTextCell(label, value, className = "") {
+  const cell = document.createElement("td");
+  const text = document.createElement("span");
+
+  cell.dataset.label = label;
+  text.className = className;
+  text.textContent = value || "None";
+  cell.append(text);
+
+  return cell;
+}
+
+function createStatusCell(container) {
+  const cell = document.createElement("td");
+  const status = document.createElement("span");
+  const state = getContainerState(container);
+
+  cell.dataset.label = "Status";
+  status.className = state.className;
+  status.textContent = state.label;
+  cell.append(status);
+
+  return cell;
+}
+
+function createServiceCell(container) {
+  const cell = document.createElement("td");
+  const wrap = document.createElement("span");
+  const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const box = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  const name = document.createElement("strong");
+
+  cell.dataset.label = "Service";
+  wrap.className = "docker-service";
+  icon.setAttribute("viewBox", "0 0 24 24");
+  icon.setAttribute("aria-hidden", "true");
+  box.setAttribute("x", "4");
+  box.setAttribute("y", "6");
+  box.setAttribute("width", "16");
+  box.setAttribute("height", "12");
+  box.setAttribute("rx", "2");
+  icon.append(box);
+  name.textContent = container.name || "Unnamed container";
+  wrap.append(icon, name);
+  cell.append(wrap);
+
+  return cell;
+}
+
+function createImageCell(value) {
+  const cell = document.createElement("td");
+  const image = splitImageName(value);
+  const wrap = document.createElement("span");
+  const repository = document.createElement("code");
+
+  cell.dataset.label = "Image";
+  wrap.className = "docker-image";
+  repository.textContent = image.repository;
+  wrap.append(repository);
+
+  if (image.tag) {
+    const tag = document.createElement("small");
+
+    tag.textContent = image.tag;
+    wrap.append(tag);
+  }
+
+  cell.append(wrap);
+
+  return cell;
+}
+
+function createPortsCell(value) {
+  const cell = document.createElement("td");
+  const wrap = document.createElement("span");
+  const ports = simplifyPorts(value);
+
+  cell.dataset.label = "Ports";
+  wrap.className = "docker-ports";
+
+  if (ports.length === 0) {
+    const empty = document.createElement("span");
+
+    empty.className = "docker-no-ports";
+    empty.textContent = "No exposed ports";
+    wrap.append(empty);
+  } else {
+    ports.forEach((port) => {
+      const badge = document.createElement("code");
+
+      badge.className = "docker-port-badge";
+      badge.textContent = port;
+      wrap.append(badge);
+    });
+  }
+
+  cell.append(wrap);
+
+  return cell;
 }
 
 function renderContainers(containers) {
@@ -289,37 +456,22 @@ function renderContainers(containers) {
     return;
   }
 
-  const cards = document.createDocumentFragment();
+  const rows = document.createDocumentFragment();
 
   containers.forEach((container) => {
-    const card = document.createElement("article");
-    const header = document.createElement("div");
-    const titleWrap = document.createElement("div");
-    const name = document.createElement("h3");
-    const image = document.createElement("code");
-    const status = document.createElement("span");
-    const state = getContainerState(container);
-    const meta = document.createElement("div");
+    const row = document.createElement("tr");
 
-    card.className = "docker-container-card";
-    header.className = "docker-container-card-header";
-    titleWrap.className = "docker-container-title";
-    name.textContent = container.name || "Unnamed container";
-    image.textContent = container.image || "Unknown image";
-    status.className = state.className;
-    status.textContent = state.label;
-    titleWrap.append(name, image);
-    header.append(titleWrap, status);
-    meta.className = "docker-container-meta";
-    meta.append(
-      createContainerMeta("Docker status", container.status),
-      createContainerMeta("Ports", simplifyPorts(container.ports), true),
+    row.append(
+      createStatusCell(container),
+      createServiceCell(container),
+      createImageCell(container.image),
+      createTextCell("Uptime", container.status, "docker-uptime"),
+      createPortsCell(container.ports),
     );
-    card.append(header, meta);
-    cards.append(card);
+    rows.append(row);
   });
 
-  containersBody.replaceChildren(cards);
+  containersBody.replaceChildren(rows);
 }
 
 function setContainerLoading(isLoading) {
@@ -339,6 +491,12 @@ function setContainerError(isError) {
   }
 }
 
+function setContainerWarning(isWarning) {
+  if (containersWarning) {
+    containersWarning.hidden = !isWarning;
+  }
+}
+
 function setContainerEmpty(isEmpty) {
   if (containersEmpty) {
     containersEmpty.hidden = !isEmpty;
@@ -351,6 +509,12 @@ function setContainerTable(isVisible) {
   }
 }
 
+function setContainerSummaryVisible(isVisible) {
+  if (containersSummary) {
+    containersSummary.hidden = !isVisible;
+  }
+}
+
 async function fetchContainers() {
   if (isFetchingContainers) {
     return;
@@ -358,21 +522,27 @@ async function fetchContainers() {
 
   isFetchingContainers = true;
   setContainerLoading(!hasContainerData);
-  setContainerError(false);
+  setContainerWarning(false);
 
   try {
     const data = await fetchJson(LAB_CONTAINERS_API_URL);
     const containers = Array.isArray(data.containers) ? data.containers : [];
 
+    setContainerError(false);
+    setContainerWarning(false);
     setContainerSummary(data);
     renderContainers(containers);
     hasContainerData = true;
+    setContainerSummaryVisible(true);
     setContainerEmpty(containers.length === 0);
     setContainerTable(containers.length > 0);
   } catch (error) {
-    setContainerError(true);
-
-    if (!hasContainerData) {
+    if (hasContainerData) {
+      setContainerWarning(true);
+      setContainerError(false);
+    } else {
+      setContainerError(true);
+      setContainerSummaryVisible(false);
       setContainerTable(false);
       setContainerEmpty(false);
     }
@@ -387,6 +557,7 @@ fetchContainers();
 
 const metricsInterval = window.setInterval(fetchMetrics, LAB_REFRESH_INTERVAL_MS);
 const containersInterval = window.setInterval(fetchContainers, CONTAINERS_REFRESH_INTERVAL_MS);
+const relativeTimeInterval = window.setInterval(updateContainerRelativeTime, 1000);
 
 if (containersRefreshButton) {
   containersRefreshButton.addEventListener("click", fetchContainers);
@@ -399,4 +570,5 @@ if (containersRetryButton) {
 window.addEventListener("pagehide", () => {
   window.clearInterval(metricsInterval);
   window.clearInterval(containersInterval);
+  window.clearInterval(relativeTimeInterval);
 });

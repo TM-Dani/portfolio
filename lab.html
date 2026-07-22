@@ -111,27 +111,53 @@
           <div class="docker-header">
             <div>
               <p class="eyebrow">Docker Containers</p>
-              <h2>Live overview of the Docker services running in my homelab.</h2>
+              <h2>Live Docker services running in my homelab.</h2>
               <p class="section-lead">Read-only container status from the Portfolio API.</p>
             </div>
-            <button class="button button-ghost ripple docker-refresh" type="button" data-containers-refresh>Refresh</button>
+            <button class="button button-ghost ripple docker-refresh" type="button" data-containers-refresh aria-label="Refresh Docker container data">Refresh</button>
           </div>
 
-          <div class="docker-summary-grid" aria-label="Docker container summary">
-            <article class="docker-summary-card"><span>Total Containers</span><strong data-container-summary="total">Loading</strong></article>
-            <article class="docker-summary-card"><span>Running</span><strong data-container-summary="running">Loading</strong></article>
-            <article class="docker-summary-card"><span>Stopped</span><strong data-container-summary="stopped">Loading</strong></article>
-            <article class="docker-summary-card"><span>Last Updated</span><strong data-container-summary="lastUpdated">Loading</strong></article>
+          <div class="docker-summary-grid" aria-label="Docker container summary" data-containers-summary hidden>
+            <article class="docker-summary-card docker-summary-total">
+              <span class="docker-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"></rect><rect x="3" y="14" width="18" height="6" rx="1.5"></rect><path d="M7 7h.01M7 17h.01"></path></svg></span>
+              <div><span>Total Containers</span><strong data-container-summary="total">Loading</strong></div>
+            </article>
+            <article class="docker-summary-card docker-summary-running">
+              <span class="docker-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg></span>
+              <div><span>Running</span><strong data-container-summary="running">Loading</strong></div>
+            </article>
+            <article class="docker-summary-card docker-summary-stopped">
+              <span class="docker-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="m15 9-6 6m0-6 6 6"></path></svg></span>
+              <div><span>Stopped</span><strong data-container-summary="stopped">Loading</strong></div>
+            </article>
+            <article class="docker-summary-card docker-summary-updated">
+              <span class="docker-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 8v4l3 2"></path></svg></span>
+              <div><span>Last Updated</span><strong data-container-summary="lastUpdated">Loading</strong><small data-container-summary-exact></small></div>
+            </article>
           </div>
 
-          <p class="docker-message" data-containers-loading>Loading Docker container data...</p>
-          <div class="docker-message docker-message-error" data-containers-error hidden>
+          <p class="docker-message" data-containers-loading aria-live="polite">Loading Docker container data...</p>
+          <p class="docker-message docker-message-warning" data-containers-warning hidden aria-live="polite">Live refresh failed. Showing last known data.</p>
+          <div class="docker-message docker-message-error" data-containers-error hidden aria-live="polite">
             <span>Unable to load Docker container data.</span>
-            <button class="small-button ripple" type="button" data-containers-retry>Retry</button>
+            <button class="small-button ripple" type="button" data-containers-retry aria-label="Retry loading Docker container data">Retry</button>
           </div>
-          <p class="docker-message" data-containers-empty hidden>No Docker containers found.</p>
+          <p class="docker-message" data-containers-empty hidden aria-live="polite">No Docker containers found.</p>
 
-          <div class="docker-container-grid" data-containers-table hidden data-containers-body></div>
+          <div class="docker-table-wrap" data-containers-table hidden>
+            <table class="docker-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Service</th>
+                  <th>Image</th>
+                  <th>Uptime</th>
+                  <th>Ports</th>
+                </tr>
+              </thead>
+              <tbody data-containers-body></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
