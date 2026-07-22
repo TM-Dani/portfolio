@@ -26,6 +26,7 @@
         <a href="/lab.html">Lab</a>
         <a href="#overview">Systems</a>
         <a href="#metrics">Metrics</a>
+        <a href="#docker">Docker</a>
         <a href="#architecture">Architecture</a>
         <a href="#services">Services</a>
       </div>
@@ -100,6 +101,50 @@
           <article class="metric-card glass reveal" data-api-target="metrics.containers"><span>Containers</span><strong data-metric-value="containers">Loading</strong><div class="metric-state" data-metric-state="containers">Healthy</div></article>
           <article class="metric-card glass reveal" data-api-target="metrics.uptime"><span>Uptime</span><strong data-metric-value="uptime">Loading</strong><div class="metric-state" data-metric-state="uptime">Stable</div></article>
           <article class="metric-card glass reveal" data-api-target="metrics.ssl"><span>SSL</span><strong data-metric-value="ssl">Loading</strong><div class="metric-state" data-metric-state="ssl">HTTPS</div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="docker">
+      <div class="shell">
+        <div class="docker-dashboard glass reveal">
+          <div class="docker-header">
+            <div>
+              <p class="eyebrow">Docker Containers</p>
+              <h2>Live overview of the Docker services running in my homelab.</h2>
+              <p class="section-lead">Read-only container status from the Portfolio API.</p>
+            </div>
+            <button class="button button-ghost ripple docker-refresh" type="button" data-containers-refresh>Refresh</button>
+          </div>
+
+          <div class="docker-summary-grid" aria-label="Docker container summary">
+            <article class="docker-summary-card"><span>Total Containers</span><strong data-container-summary="total">Loading</strong></article>
+            <article class="docker-summary-card"><span>Running</span><strong data-container-summary="running">Loading</strong></article>
+            <article class="docker-summary-card"><span>Stopped</span><strong data-container-summary="stopped">Loading</strong></article>
+            <article class="docker-summary-card"><span>Last Updated</span><strong data-container-summary="lastUpdated">Loading</strong></article>
+          </div>
+
+          <p class="docker-message" data-containers-loading>Loading Docker container data...</p>
+          <div class="docker-message docker-message-error" data-containers-error hidden>
+            <span>Unable to load Docker container data.</span>
+            <button class="small-button ripple" type="button" data-containers-retry>Retry</button>
+          </div>
+          <p class="docker-message" data-containers-empty hidden>No Docker containers found.</p>
+
+          <div class="docker-table-wrap" data-containers-table hidden>
+            <table class="docker-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Name</th>
+                  <th>Image</th>
+                  <th>Uptime / Docker status</th>
+                  <th>Ports</th>
+                </tr>
+              </thead>
+              <tbody data-containers-body></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>

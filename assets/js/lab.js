@@ -1,5 +1,7 @@
 const LAB_STATUS_API_URL = "https://api.daniel-schumacher.net/api/status";
+const LAB_CONTAINERS_API_URL = "https://api.daniel-schumacher.net/api/containers";
 const LAB_REFRESH_INTERVAL_MS = 5000;
+const CONTAINERS_REFRESH_INTERVAL_MS = 10000;
 const LAB_REQUEST_TIMEOUT_MS = 8000;
 
 const metricElements = {
@@ -45,6 +47,21 @@ const metricElements = {
 };
 
 const lastUpdatedElement = document.querySelector("[data-last-updated]");
+const containerSummaryElements = {
+  total: document.querySelector('[data-container-summary="total"]'),
+  running: document.querySelector('[data-container-summary="running"]'),
+  stopped: document.querySelector('[data-container-summary="stopped"]'),
+  lastUpdated: document.querySelector('[data-container-summary="lastUpdated"]'),
+};
+const containersBody = document.querySelector("[data-containers-body]");
+const containersTable = document.querySelector("[data-containers-table]");
+const containersLoading = document.querySelector("[data-containers-loading]");
+const containersError = document.querySelector("[data-containers-error]");
+const containersEmpty = document.querySelector("[data-containers-empty]");
+const containersRefreshButton = document.querySelector("[data-containers-refresh]");
+const containersRetryButton = document.querySelector("[data-containers-retry]");
+let isFetchingContainers = false;
+let hasContainerData = false;
 
 function clampPercentage(value) {
   const number = Number(value);
@@ -79,6 +96,23 @@ function setLastUpdated(value, isError = false) {
     dateStyle: "medium",
     timeStyle: "short",
   })}`;
+}
+
+function formatLocalDateTime(value) {
+  if (!value) {
+    return "Unknown";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Unknown";
+  }
+
+  return date.toLocaleString("en-GB", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }
 
 function setMetricsOffline() {
@@ -141,6 +175,26 @@ async function fetchStatusJson() {
   }
 }
 
+async function fetchJson(url) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), LAB_REQUEST_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed with ${response.status}`);
+    }
+
+    return await response.json();
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
 async function fetchMetrics() {
   try {
     const data = await fetchStatusJson();
@@ -161,5 +215,158 @@ async function fetchMetrics() {
   }
 }
 
+function setContainerSummary(data) {
+  if (containerSummaryElements.total) {
+    containerSummaryElements.total.textContent = String(data.total ?? 0);
+  }
+
+  if (containerSummaryElements.running) {
+    containerSummaryElements.running.textContent = String(data.running ?? 0);
+  }
+
+  if (containerSummaryElements.stopped) {
+    containerSummaryElements.stopped.textContent = String(data.stopped ?? 0);
+  }
+
+  if (containerSummaryElements.lastUpdated) {
+    containerSummaryElements.lastUpdated.textContent = formatLocalDateTime(data.lastUpdated);
+  }
+}
+
+function getContainerState(container) {
+  const state = String(container.state || "").toLowerCase();
+
+  if (container.running || state === "running") {
+    return {
+      label: "Running",
+      className: "docker-state docker-state-running",
+    };
+  }
+
+  if (state === "exited" || state === "stopped" || state === "dead") {
+    return {
+      label: "Stopped",
+      className: "docker-state docker-state-stopped",
+    };
+  }
+
+  return {
+    label: state ? state.charAt(0).toUpperCase() + state.slice(1) : "Unknown",
+    className: "docker-state docker-state-other",
+  };
+}
+
+function appendTextCell(row, value, useCode = false) {
+  const cell = document.createElement("td");
+  const content = useCode ? document.createElement("code") : document.createElement("span");
+
+  content.textContent = value || "None";
+  cell.append(content);
+  row.append(cell);
+}
+
+function renderContainers(containers) {
+  if (!containersBody) {
+    return;
+  }
+
+  const rows = document.createDocumentFragment();
+
+  containers.forEach((container) => {
+    const row = document.createElement("tr");
+    const statusCell = document.createElement("td");
+    const status = document.createElement("span");
+    const state = getContainerState(container);
+
+    status.className = state.className;
+    status.textContent = state.label;
+    statusCell.append(status);
+    row.append(statusCell);
+    appendTextCell(row, container.name);
+    appendTextCell(row, container.image, true);
+    appendTextCell(row, container.status);
+    appendTextCell(row, container.ports, true);
+    rows.append(row);
+  });
+
+  containersBody.replaceChildren(rows);
+}
+
+function setContainerLoading(isLoading) {
+  if (containersLoading) {
+    containersLoading.hidden = !isLoading;
+  }
+
+  if (containersRefreshButton) {
+    containersRefreshButton.disabled = isLoading;
+    containersRefreshButton.textContent = isLoading ? "Refreshing" : "Refresh";
+  }
+}
+
+function setContainerError(isError) {
+  if (containersError) {
+    containersError.hidden = !isError;
+  }
+}
+
+function setContainerEmpty(isEmpty) {
+  if (containersEmpty) {
+    containersEmpty.hidden = !isEmpty;
+  }
+}
+
+function setContainerTable(isVisible) {
+  if (containersTable) {
+    containersTable.hidden = !isVisible;
+  }
+}
+
+async function fetchContainers() {
+  if (isFetchingContainers) {
+    return;
+  }
+
+  isFetchingContainers = true;
+  setContainerLoading(!hasContainerData);
+  setContainerError(false);
+
+  try {
+    const data = await fetchJson(LAB_CONTAINERS_API_URL);
+    const containers = Array.isArray(data.containers) ? data.containers : [];
+
+    setContainerSummary(data);
+    renderContainers(containers);
+    hasContainerData = true;
+    setContainerEmpty(containers.length === 0);
+    setContainerTable(containers.length > 0);
+  } catch (error) {
+    setContainerError(true);
+
+    if (!hasContainerData) {
+      setContainerTable(false);
+      setContainerEmpty(false);
+    }
+  } finally {
+    isFetchingContainers = false;
+    setContainerLoading(false);
+  }
+}
+
 fetchMetrics();
-window.setInterval(fetchMetrics, LAB_REFRESH_INTERVAL_MS);
+fetchContainers();
+
+const metricsInterval = window.setInterval(fetchMetrics, LAB_REFRESH_INTERVAL_MS);
+const containersInterval = window.setInterval(fetchContainers, CONTAINERS_REFRESH_INTERVAL_MS);
+
+if (containersRefreshButton) {
+  containersRefreshButton.addEventListener("click", fetchContainers);
+}
+
+if (containersRetryButton) {
+  containersRetryButton.addEventListener("click", fetchContainers);
+}
+
+window.addEventListener("pagehide", () => {
+  window.clearInterval(metricsInterval);
+  window.clearInterval(containersInterval);
+});
