@@ -387,6 +387,8 @@ function createServiceCell(container) {
   wrap.className = "docker-service";
   icon.setAttribute("viewBox", "0 0 24 24");
   icon.setAttribute("aria-hidden", "true");
+  icon.setAttribute("fill", "none");
+  icon.setAttribute("stroke", "currentColor");
   box.setAttribute("x", "4");
   box.setAttribute("y", "6");
   box.setAttribute("width", "16");
