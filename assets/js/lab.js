@@ -317,6 +317,7 @@ function simplifyPorts(value) {
     .filter(Boolean)
     .map((port) => port
       .replace(/0\.0\.0\.0:/g, "")
+      .replace(/(?:\d{1,3}\.){3}\d{1,3}:/g, "")
       .replace(/\[::\]:/g, "")
       .replace(/\/tcp|\/udp/g, "")
       .replace("->", " \u2192 "))
@@ -474,9 +475,9 @@ function renderContainers(containers) {
   containersBody.replaceChildren(rows);
 }
 
-function setContainerLoading(isLoading) {
+function setContainerLoading(isLoading, showMessage = isLoading) {
   if (containersLoading) {
-    containersLoading.hidden = !isLoading;
+    containersLoading.hidden = !showMessage;
   }
 
   if (containersRefreshButton) {
@@ -521,7 +522,7 @@ async function fetchContainers() {
   }
 
   isFetchingContainers = true;
-  setContainerLoading(!hasContainerData);
+  setContainerLoading(true, !hasContainerData);
   setContainerWarning(false);
 
   try {
