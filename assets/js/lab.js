@@ -305,25 +305,45 @@ function getContainerState(container) {
   };
 }
 
-function simplifyPorts(value) {
-  const ports = String(value || "").trim();
+function stripProtocol(value) {
+  return String(value || "").replace(/\/(?:tcp|udp)$/i, "").trim();
+}
 
-  if (!ports || ports === "None") {
+function normalizeHostPort(value) {
+  const port = stripProtocol(value)
+    .replace(/^\[::\]:/, "")
+    .replace(/^0\.0\.0\.0:/, "")
+    .replace(/^(?:\d{1,3}\.){3}\d{1,3}:/, "");
+
+  return port.includes(":") ? port.split(":").pop().trim() : port.trim();
+}
+
+function parseDockerPorts(rawPorts) {
+  const raw = Array.isArray(rawPorts) ? rawPorts.join(",") : String(rawPorts || "");
+  const normalized = raw.trim();
+
+  if (!normalized || normalized.toLowerCase() === "none") {
     return [];
   }
 
-  return [...new Set(ports
+  const ports = normalized
     .split(",")
-    .map((port) => port.trim())
+    .map((entry) => entry.trim())
     .filter(Boolean)
-    .map((port) => port
-      .replace(/0\.0\.0\.0:/g, "")
-      .replace(/(?:\d{1,3}\.){3}\d{1,3}:/g, "")
-      .replace(/\[::\]:/g, "")
-      .replace(/\/tcp|\/udp/g, "")
-      .replace("->", " \u2192 "))
-    .map((port) => port.trim())
-    .filter(Boolean))];
+    .map((entry) => {
+      if (!entry.includes("->")) {
+        return stripProtocol(entry);
+      }
+
+      const [hostPort, containerPort] = entry.split("->");
+      const publicPort = normalizeHostPort(hostPort);
+      const privatePort = stripProtocol(containerPort);
+
+      return publicPort && privatePort ? `${publicPort} \u2192 ${privatePort}` : "";
+    })
+    .filter(Boolean);
+
+  return [...new Set(ports)];
 }
 
 function splitImageName(value) {
@@ -429,7 +449,7 @@ function createImageCell(value) {
 function createPortsCell(value) {
   const cell = document.createElement("td");
   const wrap = document.createElement("span");
-  const ports = simplifyPorts(value);
+  const ports = parseDockerPorts(value);
 
   cell.dataset.label = "Ports";
   wrap.className = "docker-ports";
@@ -489,37 +509,67 @@ function setContainerLoading(isLoading, showMessage = isLoading) {
   }
 }
 
+function hideElement(element) {
+  if (!element) {
+    return;
+  }
+
+  element.hidden = true;
+  element.style.display = "none";
+  element.classList.remove("is-visible", "active", "show");
+}
+
+function showElement(element) {
+  if (!element) {
+    return;
+  }
+
+  element.style.removeProperty("display");
+  element.hidden = false;
+  element.classList.add("is-visible");
+}
+
 function setContainerError(isError) {
-  if (containersError) {
-    containersError.hidden = !isError;
+  if (isError) {
+    showElement(containersError);
+  } else {
+    hideElement(containersError);
   }
 }
 
 function setContainerWarning(isWarning) {
-  if (containersWarning) {
-    containersWarning.hidden = !isWarning;
+  if (isWarning) {
+    showElement(containersWarning);
+  } else {
+    hideElement(containersWarning);
   }
 }
 
 function setContainerEmpty(isEmpty) {
-  if (containersEmpty) {
-    containersEmpty.hidden = !isEmpty;
+  if (isEmpty) {
+    showElement(containersEmpty);
+  } else {
+    hideElement(containersEmpty);
   }
 }
 
 function setContainerTable(isVisible) {
-  if (containersTable) {
-    containersTable.hidden = !isVisible;
+  if (isVisible) {
+    showElement(containersTable);
+  } else {
+    hideElement(containersTable);
   }
 }
 
 function setContainerSummaryVisible(isVisible) {
-  if (containersSummary) {
-    containersSummary.hidden = !isVisible;
+  if (isVisible) {
+    showElement(containersSummary);
+  } else {
+    hideElement(containersSummary);
   }
 }
 
-function setContainersFirstLoadLoading() {
+function showLoadingState() {
   setContainerLoading(true, true);
   setContainerError(false);
   setContainerWarning(false);
@@ -528,8 +578,9 @@ function setContainersFirstLoadLoading() {
   setContainerSummaryVisible(false);
 }
 
-function setContainersSuccess(containers, data) {
+function showSuccessState(containers, data) {
   currentContainerCount = containers.length;
+  hasContainerData = true;
   setContainerError(false);
   setContainerWarning(false);
   setContainerEmpty(containers.length === 0);
@@ -537,10 +588,10 @@ function setContainersSuccess(containers, data) {
   setContainerTable(containers.length > 0);
   setContainerSummary(data);
   renderContainers(containers);
-  hasContainerData = true;
+  setContainerLoading(false, false);
 }
 
-function setContainersFirstLoadError() {
+function showInitialErrorState() {
   setContainerLoading(false, false);
   setContainerError(true);
   setContainerWarning(false);
@@ -549,12 +600,25 @@ function setContainersFirstLoadError() {
   setContainerSummaryVisible(false);
 }
 
-function setContainersStaleWarning() {
+function showStaleWarningState() {
   setContainerError(false);
   setContainerWarning(true);
   setContainerEmpty(currentContainerCount === 0);
   setContainerTable(currentContainerCount > 0);
   setContainerSummaryVisible(true);
+}
+
+function showEmptyState(data) {
+  currentContainerCount = 0;
+  hasContainerData = true;
+  setContainerError(false);
+  setContainerWarning(false);
+  setContainerEmpty(true);
+  setContainerTable(false);
+  setContainerSummaryVisible(true);
+  setContainerSummary(data);
+  renderContainers([]);
+  setContainerLoading(false, false);
 }
 
 async function fetchContainers() {
@@ -568,19 +632,23 @@ async function fetchContainers() {
     setContainerLoading(true, false);
     setContainerWarning(false);
   } else {
-    setContainersFirstLoadLoading();
+    showLoadingState();
   }
 
   try {
     const data = await fetchJson(LAB_CONTAINERS_API_URL);
     const containers = Array.isArray(data.containers) ? data.containers : [];
 
-    setContainersSuccess(containers, data);
+    if (containers.length === 0) {
+      showEmptyState(data);
+    } else {
+      showSuccessState(containers, data);
+    }
   } catch (error) {
     if (hasContainerData) {
-      setContainersStaleWarning();
+      showStaleWarningState();
     } else {
-      setContainersFirstLoadError();
+      showInitialErrorState();
     }
   } finally {
     isFetchingContainers = false;
