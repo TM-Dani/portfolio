@@ -1,8 +1,6 @@
 # Daniel Schumacher Portfolio
 
-A premium static developer portfolio for Daniel Schumacher, an aspiring software developer from Switzerland.
-
-The website is built for internship and job applications. It presents Daniel's skills, projects, learning timeline, contact details, and self-hosted Proxmox homelab.
+The website is built for internship and job applications. It presents My skills, projects, learning timeline, contact details, and self-hosted Proxmox homelab.
 
 ## Tech Stack
 
@@ -46,9 +44,9 @@ assets/
 - Scroll reveal animations
 - Cursor glow
 - Button ripple effects
-- Premium project cards with visual architecture diagrams, tech badges, status indicators, "What I built" and "What I learned"
+- Project cards with visual architecture diagrams, tech badges, status indicators, "What I built" and "What I learned"
 - Dedicated Lab / Infrastructure page with static system overview, metrics, services table and deployment workflow
-- Static homelab dashboard prepared for future live status data
+- Static homelab dashboard for live status data
 - Hosting architecture section
 - Download CV callout
 
@@ -109,13 +107,3 @@ The layout is already prepared for those values to be updated dynamically later.
 ## Lab Page
 
 `lab.html` presents the self-hosted infrastructure in a dashboard-style format. It includes static placeholder data for system status, infrastructure metrics, active services, architecture and future improvements so live API data can be added later without redesigning the page.
-
-## CV
-
-Place the CV PDF at:
-
-```text
-assets/documents/cv.pdf
-```
-
-The website buttons already link to that path.
